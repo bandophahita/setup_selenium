@@ -44,13 +44,6 @@ jobs:
         uses: browser-actions/setup-chrome@v1
         with:
           chrome-version: stable
-#      - run: chrome --version
-      - run: |
-          echo Installed chromium version: ${{ steps.setup-chrome.outputs.chrome-version }}
-          ${{ steps.setup-chrome.outputs.chrome-path }} --version
-      
-#      - name: Test with tox
-#        run: tox
 
       - name: Setup Poetry
         uses: abatilo/actions-poetry@v2
