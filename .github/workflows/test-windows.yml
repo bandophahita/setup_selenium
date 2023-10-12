@@ -40,21 +40,27 @@ jobs:
           python -m pip install --upgrade pip
 #          pip install tox tox-gh-actions
 
+# USING actions to install browser is much faster
       - name: Install browsers on Windows
         if: runner.os == 'Windows'
         shell: powershell
         run: |
-          choco install firefox googlechrome --no-progress -y --force
+          choco install chromium --no-progress -y --force
 
-#      - name: install chrome
-#        uses: browser-actions/setup-chrome@v1
-#        with:
-#          chrome-version: stable
-#
-#      - name: install firefox
-#        uses: browser-actions/setup-firefox@v1
-#        with:
-#          firefox-version: latest
+      - name: install chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: install chromium
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: install firefox
+        uses: browser-actions/setup-firefox@v1
+        with:
+          firefox-version: latest
 
       - name: Setup Poetry
         uses: abatilo/actions-poetry@v2

@@ -19,9 +19,9 @@ def test_install_firefox() -> None:
     assert os.path.exists(path)
 
 
-# def test_install_chromium() -> None:
-#     path = SetupSelenium.install_driver(Browser.CHROMIUM)
-#     assert os.path.exists(path)
+def test_install_chromium() -> None:
+    path = SetupSelenium.install_driver(Browser.CHROMIUM)
+    assert os.path.exists(path)
 
 
 def test_install_edge() -> None:
