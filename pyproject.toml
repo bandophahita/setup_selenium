@@ -22,6 +22,7 @@ mypy = "*"
 pylint = "*"
 setuptools = "*"
 ruff = "*"
+tox = "*"
 
 
 [tool.isort]
