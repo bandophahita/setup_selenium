@@ -1,7 +1,6 @@
 import os
 
-
-from setup_selenium import SetupSelenium, Browser
+from setup_selenium import Browser, SetupSelenium
 
 
 def test_can_be_instantiated() -> None:
