@@ -45,6 +45,11 @@ jobs:
         with:
           chrome-version: stable
 
+      - name: install firefox
+        uses: browser-actions/setup-firefox@v1
+        with:
+          firefox-version: latest
+
       - name: Setup Poetry
         uses: abatilo/actions-poetry@v2
         with:
