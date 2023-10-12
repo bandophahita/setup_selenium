@@ -28,6 +28,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Install browsers on Windows
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          choco install chromium opera brave googlechrome --no-progress -y --force
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
