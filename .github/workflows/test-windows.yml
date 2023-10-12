@@ -41,13 +41,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install tox tox-gh-actions
 
-      - name: Install browsers on Windows
-        if: runner.os == 'Windows'
-        shell: powershell
-#          choco install chromium opera brave googlechrome --no-progress -y --force
-#          choco install chromium googlechrome firefox --no-progress -y --force
-        run: |
-          choco install googlechrome --no-progress -y --force
+#      - name: Install browsers on Windows
+#        if: runner.os == 'Windows'
+#        shell: powershell
+##          choco install chromium opera brave googlechrome --no-progress -y --force
+##          choco install chromium googlechrome firefox --no-progress -y --force
+#        run: |
+#          choco install googlechrome --no-progress -y --force
+
+      - name: install chrome
+        uses: browser-actions/setup-chrome@v1
+        run: chrome --version
       
 #      - name: Test with tox
 #        run: tox

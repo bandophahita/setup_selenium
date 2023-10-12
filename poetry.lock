@@ -962,24 +962,20 @@ docs = ["furo (>=2023.7.26)", "proselint (>=0.13)", "sphinx (>=7.1.2)", "sphinx-
 test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7)", "packaging (>=23.1)", "pytest (>=7.4)", "pytest-env (>=0.8.2)", "pytest-freezer (>=0.4.8)", "pytest-mock (>=3.11.1)", "pytest-randomly (>=3.12)", "pytest-timeout (>=2.1)", "setuptools (>=68)", "time-machine (>=2.10)"]
 
 [[package]]
-name = "webdriver_manager"
+name = "webdriver-manager"
 version = "4.0.1"
-description = ""
+description = "Library provides the way to automatically manage drivers for different browsers"
 optional = false
 python-versions = ">=3.7"
-files = []
-develop = false
+files = [
+    {file = "webdriver_manager-4.0.1-py2.py3-none-any.whl", hash = "sha256:d7970052295bb9cda2c1a24cf0b872dd2c41ababcc78f7b6b8dc37a41e979a7e"},
+    {file = "webdriver_manager-4.0.1.tar.gz", hash = "sha256:25ec177c6a2ce9c02fb8046f1b2732701a9418d6a977967bb065d840a3175d87"},
+]
 
 [package.dependencies]
 packaging = "*"
 python-dotenv = "*"
 requests = "*"
-
-[package.source]
-type = "git"
-url = "git@github.com:SergeyPirogov/webdriver_manager.git"
-reference = "master"
-resolved_reference = "178a390311e297f8aba9fc20234c7398b934ed5b"
 
 [[package]]
 name = "wsproto"
@@ -998,4 +994,4 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "923204d846f26ac38a8418a9f5a6ff766a809d1a7bb4a922b430a3b0c6df2467"
+content-hash = "05ba0592169cc1bd3dfc650a22d1ca1c09c8bc4f91269ff26bcd008d77a9e535"
