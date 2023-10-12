@@ -1,0 +1,224 @@
+[tool.poetry]
+name = "setup_selenium"
+version = "0.0.1"
+description = "Setup Selenium for automation testing"
+authors = ["Marcel Wilson <trenchrats@gmail.com>"]
+
+
+[tool.poetry.dependencies]
+python = "^3.11"
+selenium = "4.12.0"
+#webdriver-manager = "^4.0.0"
+webdriver-manager = { git = "git@github.com:SergeyPirogov/webdriver_manager.git", branch = "master"}
+semantic-version = "*"
+
+# poetry add {package} -G dev
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+coverage = "*"
+flake8 = "*"
+black = "*"
+mypy = "*"
+pylint = "*"
+setuptools = "*"
+ruff = "*"
+
+
+[tool.isort]
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = "True"
+use_parentheses = "True"
+combine_as_imports = "True"
+skip = [".idea"]
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+# LINTER CONFIGURATION & GUIDELINES 
+# There is no rule that says linter configurations MUST be put in the pyproject.toml
+# This is partially because not all tools support it.  That said with the move to ruff,
+# this file felt like the logical place to keep any documentations regarding how or why
+# configurations are the way they are.
+
+# The general rule:
+# "Linters should help, not hinder."
+# If the inclination on a rule is to add a whole bunch of exceptions in various places,
+# perhaps that rule should not be run regularly.
+
+
+[tool.ruff]
+# Enable the pycodestyle (`E`) and Pyflakes (`F`) rules by default.
+# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
+# McCabe complexity (`C901`) by default.
+select = [
+    "E",  # pycodestyle error
+    "W",  # pycodestyle warning
+    "F",  # Pyflakes
+    "FA", # flake8-future-annotations
+    "I",  # isort
+    "D",  # pydocstyle
+    "C4",  # flake8-comprehensions
+    "TCH",  # type checking
+    "RUF",  # ruff specific
+    "ANN",  # annotations
+    "UP",  # python upgrade
+    "B",  # bugbear
+    "SIM", # flake8 simplify
+    "A",  # built-ins
+    "RET", # flake8 return
+    "YTT", # flake8-2020
+    "EXE", # flake8-executable
+    "ISC", # flake8-implicit-str-concat
+    "PIE", # flake8-pie
+    "Q",  # flake8-quotes
+    "RSE", # flake8-raise
+    "FLY", # flynt
+    "PERF", # perflint
+    "PL", # pylint
+#    "ERA", # eradicate
+    #    "N", # pep8 naming -- dear lord, leave this off
+
+    # may eventually use but for now these are not helpful
+    #    "FURB", # refurb
+    #    "ARG",  # unused arguments
+    #    "PT",  # Pytest style
+    #    "TD",  #TODOs
+    #    "FBT",  # boolean trap
+]
+ignore = [
+    #    "PT003",  # pytest fixture scope implied
+    #    "PT004",  # pytest fixture setup doesn't return anything
+    "RUF100",  # blanket noqa
+    "ANN101",  # missing-type-self
+    "ANN102",  # cls 
+    "E501",   # line too long -- black will take care of this for us
+    "E721", # type-comparison WTF? 
+    "B028", # No explicit `stacklevel` keyword argument found
+    "SIM102", # single if instead of nested -- only sometimes useful
+    "SIM114", # combine if branches using logical OR -- only sometimes useful
+    "SIM115", # use context handler for open -- situationally useful
+    "SIM118", # use x in y instead of y.keys() - sometimes we want the keys 
+    "SIM300", # yoda conditions -- meh
+
+    "PERF203", # `try`-`except` within a loop incurs performance overhead
+    "PERF401", # use list comp
+
+    # NOT OPTIONAL. MUST REMAIN AS SET
+    # these are all completely unnecessary 
+    "D100", # Missing docstring in public module
+    "D101", # Missing docstring in public class
+    "D102", # Missing docstring in public method
+    "D103", # Missing docstring in public function
+    "D104", # Missing docstring in public package
+    "D105", # Missing docstring in magic method
+    "D106", # Missing docstring in public nested class
+    "D107", # Missing docstring in `__init__`
+    "D301", # Use `r"""` if any backslashes in a docstring
+    "D400", # First line should end with a period
+    "D401", # imperative mood
+    "D403", # first word of 1st line caps
+    "D404", # First word of the docstring should not be "This"
+    "D405", # Section name should be properly capitalized
+    "D406", # Section name should end with a newline 
+    "D407", # Missing dashed underline after section
+    "D411", # Missing blank line before section
+    "D412", # No blank lines allowed between a section header and its content 
+    "D415", # First line should end with punctuation
+    "D200", # One-line docstring should fit on one line
+    "D202", # no blank lines after docstring
+    "D204", # blank line required after docstring
+    "D205", # blank line between summary and description
+    "D203", # one-blank-line-before-class
+    "D210", # whitespace
+    "D212", # Multi-line summary should start at the first line
+    "D214", # Section overindented
+    "A003", # Class attribute shadow builtin
+    "PLC0414", # useless-import-alias
+    "PLR0911", # too-many-return-statements
+    "PLR0912", # too-many-branches
+    "PLR0913", # too-many-arguments
+    "PLR0915", # too-many-statements
+    "PLR2004", # magic-value-comparison
+
+]
+
+# Same as Black.
+line-length = 88
+target-version = "py311"
+
+exclude = [
+    ".github",
+    ".pytest_cache",
+    ".venv",
+    "venv",
+    "dockerfiles",
+    "docs",
+    ".coverage",
+    ".coveragerc",
+    ".env",
+    ".env.example",
+    ".flake8",
+    ".gitignore",
+    "alembic.ini",
+    "bandit.yaml",
+    "docker-compose-dev.yaml",
+    "docker-compose-pro.yaml",
+    "Makefile",
+    "mkdocks.yml",
+    "mypy.ini",
+    "poetry.lock",
+    "pyproject.toml",
+    "pytest.ini",
+    "README.md",
+    ".idea",
+]
+
+
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+
+[tool.ruff.isort]
+combine-as-imports = true
+split-on-trailing-comma = true
+
+
+[tool.ruff.flake8-pytest-style]
+mark-parentheses = false
+
+
+[tool.ruff.pycodestyle]
+ignore-overlong-task-comments = true
+
+
+#[tool.ruff.flake8-annotations]
+#mypy-init-return = true
+
+
+[tool.ruff.flake8-annotations]
+# ignore returns types for functions that implicity or explicitly only return None
+suppress-none-returning = true
+allow-star-arg-any = true
+
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+# 'extend-exclude' excludes files or directories in addition to the defaults
+extend-exclude = '''
+# A regex preceded with ^/ will apply only to files and directories
+# in the root of the project.
+(
+    \.idea
+    | \.git
+    | \.mypy_cache
+    | \.tox
+)
+
+'''
