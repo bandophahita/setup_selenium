@@ -25,7 +25,6 @@ jobs:
 #          "3.10",
           "3.11"
         ]
-        poetry-version: ["1.6.1"]
 
     steps:
       - uses: actions/checkout@v3
@@ -41,19 +40,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install tox tox-gh-actions
 
-#      - name: Install browsers on Windows
-#        if: runner.os == 'Windows'
-#        shell: powershell
-##          choco install chromium opera brave googlechrome --no-progress -y --force
-##          choco install chromium googlechrome firefox --no-progress -y --force
-#        run: |
-#          choco install googlechrome --no-progress -y --force
-
       - name: install chrome
         uses: browser-actions/setup-chrome@v1
         with:
           chrome-version: stable
-      - run: chrome --version
+#      - run: chrome --version
+      - run: |
+          echo Installed chromium version: ${{ steps.setup-chrome.outputs.chrome-version }}
+          ${{ steps.setup-chrome.outputs.chrome-path }} --version
       
 #      - name: Test with tox
 #        run: tox
@@ -61,7 +55,7 @@ jobs:
       - name: Setup Poetry
         uses: abatilo/actions-poetry@v2
         with:
-          poetry-version: ${{ matrix.poetry-version }}
+          poetry-version: "1.6.1"
 
       - name: Configure Poetry
         shell: bash
