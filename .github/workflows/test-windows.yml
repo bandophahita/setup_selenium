@@ -48,5 +48,19 @@ jobs:
         run: |
           choco install googlechrome --no-progress -y --force
       
-      - name: Test with tox
-        run: tox
+#      - name: Test with tox
+#        run: tox
+
+      - name: Setup Poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+
+      - name: Configure Poetry
+        shell: bash
+        run: poetry config virtualenvs.create false
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          poetry install --with dev --sync
