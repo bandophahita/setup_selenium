@@ -63,3 +63,7 @@ jobs:
         shell: bash
         run: |
           poetry install --with dev
+
+      - name: Test with pytest
+        run: |
+          pytest -vv
