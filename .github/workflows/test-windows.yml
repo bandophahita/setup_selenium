@@ -44,7 +44,9 @@ jobs:
         if: runner.os == 'Windows'
         shell: powershell
         run: |
-          choco install chromium opera brave googlechrome --no-progress -y --force
+#          choco install chromium opera brave googlechrome --no-progress -y --force
+#          choco install chromium googlechrome firefox --no-progress -y --force
+          choco install googlechrome --no-progress -y --force
       
       - name: Test with tox
         run: tox
