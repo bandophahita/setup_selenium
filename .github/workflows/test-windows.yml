@@ -64,4 +64,4 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: |
-          poetry install --with dev --sync
+          poetry install --with dev
