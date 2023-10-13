@@ -27,7 +27,6 @@ jobs:
         ]
 
     steps:
-# INSTALL BROWSERS
       - name: Install chromium
         shell: powershell
         run: |

@@ -27,7 +27,6 @@ jobs:
         ]
     
     steps:
-# INSTALL BROWSERS
       - name: Install browsers on Linux
         run: |
           sudo apt-get update

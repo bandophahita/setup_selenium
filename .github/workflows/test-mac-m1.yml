@@ -27,7 +27,6 @@ jobs:
         ]
 
     steps:
-# INSTALL BROWSERS
       - name: Install browsers on MacOS
         run: |
           brew tap domt4/chromium
