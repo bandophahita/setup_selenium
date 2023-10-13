@@ -7,8 +7,8 @@ from typing import TYPE_CHECKING
 import pytest
 from selenium import webdriver
 
-from setup_selenium import Browser, SetupSelenium
-from setup_selenium.selenium_module import logger as original_logger, set_logger
+from setup_selenium import Browser, SetupSelenium, set_logger
+from setup_selenium.selenium_module import logger as original_logger
 
 if TYPE_CHECKING:
     from _pytest.logging import LogCaptureFixture
