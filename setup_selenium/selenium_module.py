@@ -3,7 +3,7 @@ from __future__ import annotations
 import errno
 import logging
 import os as os
-from enum import StrEnum
+from enum import Enum
 from typing import TYPE_CHECKING
 
 from selenium import webdriver
@@ -54,7 +54,7 @@ def set_logger(logr: logging.Logger) -> None:
     wdm_set_logger(logger)
 
 
-class Browser(StrEnum):
+class Browser(str, Enum):
     EDGE = "edge"
     CHROME = "chrome"
     CHROMIUM = "chromium"
@@ -673,7 +673,7 @@ class SetupSelenium:
     # def close(self) -> None:
     #     if self.driver is not None:
     #         self.driver.close()
-    # 
+    #
     # ############################################################################
     # def quit(self) -> None:  # noqa: A003
     #     if self.driver is not None:
