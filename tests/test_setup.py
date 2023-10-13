@@ -55,7 +55,9 @@ def in_caplog(s: str, caplog: LogCaptureFixture) -> bool:
     return len(list(filter(lambda x: s in x, caplog.messages))) > 0
 
 
-def test_custom_logger(caplog: LogCaptureFixture, create_logger: logging.Logger) -> None:
+def test_custom_logger(
+    caplog: LogCaptureFixture, create_logger: logging.Logger
+) -> None:
     """Test the custom logger."""
 
     # Set the custom logger
@@ -66,17 +68,19 @@ def test_custom_logger(caplog: LogCaptureFixture, create_logger: logging.Logger)
 
     assert "initializing chromedriver" in caplog.messages
     assert "====== WebDriver manager ======" in caplog.messages
-    assert ("--disable-extensions\n"
-            "--allow-running-insecure-content\n"
-            "--ignore-certificate-errors\n"
-            "--disable-single-click-autofill\n"
-            "--disable-autofill-keyboard-accessory-view[8]\n"
-            "--disable-full-form-autofill-ios\n"
-            "--disable-infobars\n"
-            "--no-sandbox\n"
-            "--disable-dev-shm-usage\n"
-            "--disable-gpu\n"
-            "--headless") in caplog.messages
+    assert (
+        "--disable-extensions\n"
+        "--allow-running-insecure-content\n"
+        "--ignore-certificate-errors\n"
+        "--disable-single-click-autofill\n"
+        "--disable-autofill-keyboard-accessory-view[8]\n"
+        "--disable-full-form-autofill-ios\n"
+        "--disable-infobars\n"
+        "--no-sandbox\n"
+        "--disable-dev-shm-usage\n"
+        "--disable-gpu\n"
+        "--headless"
+    ) in caplog.messages
 
     assert in_caplog("Driver info: chromedriver=", caplog)
     assert in_caplog("Browser info:      chrome=", caplog)
@@ -84,23 +88,27 @@ def test_custom_logger(caplog: LogCaptureFixture, create_logger: logging.Logger)
     set_logger(original_logger)
 
 
-def test_default_logger(caplog: LogCaptureFixture,) -> None:
+def test_default_logger(
+    caplog: LogCaptureFixture,
+) -> None:
     with caplog.at_level(logging.DEBUG, logger="sel"):
         SetupSelenium(headless=True)
 
     assert "initializing chromedriver" in caplog.messages
     assert "====== WebDriver manager ======" in caplog.messages
-    assert ("--disable-extensions\n"
-            "--allow-running-insecure-content\n"
-            "--ignore-certificate-errors\n"
-            "--disable-single-click-autofill\n"
-            "--disable-autofill-keyboard-accessory-view[8]\n"
-            "--disable-full-form-autofill-ios\n"
-            "--disable-infobars\n"
-            "--no-sandbox\n"
-            "--disable-dev-shm-usage\n"
-            "--disable-gpu\n"
-            "--headless") in caplog.messages
+    assert (
+        "--disable-extensions\n"
+        "--allow-running-insecure-content\n"
+        "--ignore-certificate-errors\n"
+        "--disable-single-click-autofill\n"
+        "--disable-autofill-keyboard-accessory-view[8]\n"
+        "--disable-full-form-autofill-ios\n"
+        "--disable-infobars\n"
+        "--no-sandbox\n"
+        "--disable-dev-shm-usage\n"
+        "--disable-gpu\n"
+        "--headless"
+    ) in caplog.messages
 
     assert in_caplog("Driver info: chromedriver=", caplog)
     assert in_caplog("Browser info:      chrome=", caplog)
