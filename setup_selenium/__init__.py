@@ -1,1 +1,1 @@
-from .selenium_module import SetupSelenium, Browser
+from .selenium_module import Browser, SetupSelenium

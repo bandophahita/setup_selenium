@@ -77,10 +77,10 @@ def test_custom_logger(caplog: LogCaptureFixture, create_logger: logging.Logger)
             "--disable-dev-shm-usage\n"
             "--disable-gpu\n"
             "--headless") in caplog.messages
-    
+
     assert in_caplog("Driver info: chromedriver=", caplog)
     assert in_caplog("Browser info:      chrome=", caplog)
-    
+
     set_logger(original_logger)
 
 
