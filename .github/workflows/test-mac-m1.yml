@@ -32,7 +32,6 @@ jobs:
           mtslzr/marmaduke-chromium
           brew update
           brew install marmaduke-chromium --no-quarantine
-#          xattr -cr /Applications/Chromium.app
           /Applications/Chromium.app/Contents/MacOS/Chromium --version
 
 #      - name: install chromium
