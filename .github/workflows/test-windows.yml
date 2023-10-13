@@ -32,11 +32,6 @@ jobs:
         run: |
           choco install chromium --no-progress -y --force
 
-#      - name: install chromium
-#        uses: browser-actions/setup-chrome@v1
-#        with:
-#          chrome-version: stable
-      
       - name: install chrome
         uses: browser-actions/setup-chrome@v1
         with:
@@ -47,12 +42,6 @@ jobs:
         with:
           firefox-version: latest
       
-
-
-
-
-
-
 
 
 

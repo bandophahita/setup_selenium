@@ -35,11 +35,6 @@ jobs:
           brew install marmaduke-chromium --no-quarantine
           /Applications/Chromium.app/Contents/MacOS/Chromium --version
 
-#      - name: install chromium
-#        uses: browser-actions/setup-chrome@v1
-#        with:
-#          chrome-version: latest
-
       - name: install chrome
         uses: browser-actions/setup-chrome@v1
         with:
@@ -50,13 +45,6 @@ jobs:
         with:
           firefox-version: latest
       
-
-
-
-
-
-
-
 
 
 
