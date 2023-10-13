@@ -2,9 +2,9 @@ name: Linux
 
 on:
   push:
-    paths:
-      - '**.py'
-      - '**.yml'
+#    paths:
+#      - '**.py'
+#      - '**.yml'
   pull_request:
   workflow_dispatch:
 
