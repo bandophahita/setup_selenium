@@ -27,17 +27,16 @@ jobs:
         ]
 
     steps:
-#      - name: Install chromium
-#        run: |
-#          brew tap domt4/chromium
-#          brew update
-#          brew install --cask mac-chromium
-##          brew upgrade google-chrome
+      - name: Install chromium
+        run: |
+          brew tap domt4/chromium
+          brew update
+          brew install --cask chromium
 
-      - name: install chromium
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: latest
+#      - name: install chromium
+#        uses: browser-actions/setup-chrome@v1
+#        with:
+#          chrome-version: latest
 
       - name: install chrome
         uses: browser-actions/setup-chrome@v1
