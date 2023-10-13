@@ -18,7 +18,6 @@ jobs:
       matrix:
         python-version: ["3.10", "3.11"]
         os: [ubuntu-latest]
-        poetry-version: ["1.6.1"]
 
     steps:
       - uses: actions/checkout@v3
@@ -36,7 +35,7 @@ jobs:
       - name: Setup Poetry
         uses: abatilo/actions-poetry@v2
         with:
-          poetry-version: ${{ matrix.poetry-version }}
+          poetry-version: "1.6.1"
         
       - name: Configure Poetry
         shell: bash
