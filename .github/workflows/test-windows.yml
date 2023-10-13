@@ -29,7 +29,6 @@ jobs:
     steps:
 # INSTALL BROWSERS
       - name: Install chromium
-        if: runner.os == 'Windows'
         shell: powershell
         run: |
           choco install chromium --no-progress -y --force

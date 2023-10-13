@@ -29,7 +29,6 @@ jobs:
     steps:
 # INSTALL BROWSERS
       - name: Install browsers on Linux
-        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install software-properties-common apt-transport-https wget curl

@@ -29,7 +29,6 @@ jobs:
     steps:
 # INSTALL BROWSERS
       - name: Install browsers on MacOS
-        if: startsWith(runner.os, 'macOS')
         run: |
           brew tap domt4/chromium
           brew update
