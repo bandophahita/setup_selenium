@@ -30,14 +30,28 @@ __all__ = ["SetupSelenium"]
 
 def create_logger(name: str) -> logging.Logger:
     __logger: type[logging.Logger] = logging.getLoggerClass()
-    logger: logging.Logger = logging.getLogger(name)
+    logr: logging.Logger = logging.getLogger(name)
     logging.setLoggerClass(__logger)
-    logger.setLevel(logging.DEBUG)
-    return logger
+    logr.setLevel(logging.DEBUG)
+    return logr
 
 
 logger = create_logger("sel")
 wdm_set_logger(logger)
+
+
+def set_logger(logr: logging.Logger) -> None:
+    """
+    Set the global logger with a custom logger
+    """
+    # Check if the logger is a valid logger
+    if not isinstance(logr, logging.Logger):
+        raise ValueError("The logger must be an instance of logging.Logger")
+
+    # Bind the logger input to the global logger
+    global logger  # noqa: PLW0603
+    logger = logr
+    wdm_set_logger(logger)
 
 
 class Browser(StrEnum):
@@ -248,11 +262,6 @@ class SetupSelenium:
         binary: str | None = None,
         options: webdriver.FirefoxOptions = None,
     ) -> webdriver.Firefox:
-        """
-        version: the options are 'auto', or a specific version
-        this method doesn't auto match geckodriver to firefox version
-        """
-
         options = options or SetupSelenium.firefox_options()
         if binary:
             options.binary_location = binary
@@ -326,10 +335,6 @@ class SetupSelenium:
         binary: str | None = None,
         options: webdriver.ChromeOptions = None,
     ) -> webdriver.Chrome:
-        """
-        version: the options are 'latest', 'auto', or a specific version
-        """
-
         options = options or SetupSelenium.chrome_options()
         if binary:
             options.binary_location = binary
@@ -446,10 +451,6 @@ class SetupSelenium:
         binary: str | None = None,
         options: webdriver.ChromeOptions = None,
     ) -> webdriver.Chrome:
-        """
-        this method assumes you're on linux and the driver is already installed
-        """
-
         options = options or SetupSelenium.chrome_options()
         if binary:
             options.binary_location = binary
@@ -667,15 +668,16 @@ class SetupSelenium:
             self.main_window_handle = window
         return self.main_window_handle
 
+    # not sure we need these -- commenting out to verify it doesn't break something
     ############################################################################
-    def close(self) -> None:
-        if self.driver is not None:
-            self.driver.close()
-
-    ############################################################################
-    def quit(self) -> None:  # noqa: A003
-        if self.driver is not None:
-            self.driver.quit()
+    # def close(self) -> None:
+    #     if self.driver is not None:
+    #         self.driver.close()
+    # 
+    # ############################################################################
+    # def quit(self) -> None:  # noqa: A003
+    #     if self.driver is not None:
+    #         self.driver.quit()
 
     ############################################################################
     def __repr__(self) -> str:
