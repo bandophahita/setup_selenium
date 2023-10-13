@@ -1,4 +1,4 @@
-name: Windows
+name: MacM1
 
 on:
   push:
@@ -14,7 +14,7 @@ permissions:
 jobs:
   run-tests:
     name: Python ${{ matrix.python-version }}
-    runs-on: windows-latest
+    runs-on: macos-latest
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     strategy:
@@ -28,29 +28,29 @@ jobs:
 
     steps:
 # INSTALL BROWSERS
-      - name: Install chromium
-        if: runner.os == 'Windows'
-        shell: powershell
+      - name: Install browsers on MacOS
+        if: startsWith(runner.os, 'macOS')
         run: |
-          choco install chromium --no-progress -y --force
+          brew tap domt4/chromium
+          brew update
+          brew install --cask mac-chromium
+          brew upgrade google-chrome
 
 #      - name: install chromium
 #        uses: browser-actions/setup-chrome@v1
 #        with:
 #          chrome-version: stable
-      
-      - name: install chrome
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: stable
+
+#      - name: install chrome
+#        uses: browser-actions/setup-chrome@v1
+#        with:
+#          chrome-version: stable
 
       - name: install firefox
         uses: browser-actions/setup-firefox@v1
         with:
           firefox-version: latest
       
-
-
 
 
 
