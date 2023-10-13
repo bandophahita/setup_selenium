@@ -27,10 +27,11 @@ jobs:
         ]
 
     steps:
-      - name: Install browsers on Linux
+      - name: Install chromium
         run: |
           sudo apt-get update
           sudo apt-get install software-properties-common apt-transport-https wget curl
+          sudo apt-get install chromium-browser
           
 #          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 #          sudo dpkg -i google-chrome-stable_current_amd64.deb
@@ -43,8 +44,6 @@ jobs:
 #          sudo add-apt-repository "deb [arch=i386,amd64] https://deb.opera.com/opera-stable/ stable non-free"
 #          sudo apt-get update
 #          sudo apt-get -y --no-install-recommends install opera-stable
-
-          sudo apt-get install chromium-browser
 
 #          sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 #          echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
