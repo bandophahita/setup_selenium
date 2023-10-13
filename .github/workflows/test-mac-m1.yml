@@ -29,9 +29,11 @@ jobs:
     steps:
       - name: Install chromium
         run: |
-          brew tap domt4/chromium
+          mtslzr/marmaduke-chromium
           brew update
-          brew install --cask chromium
+          brew install marmaduke-chromium --no-quarantine
+#          xattr -cr /Applications/Chromium.app
+          /Applications/Chromium.app/Contents/MacOS/Chromium --version
 
 #      - name: install chromium
 #        uses: browser-actions/setup-chrome@v1
