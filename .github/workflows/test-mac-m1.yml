@@ -34,17 +34,17 @@ jobs:
           brew tap domt4/chromium
           brew update
           brew install --cask mac-chromium
-          brew upgrade google-chrome
+#          brew upgrade google-chrome
 
 #      - name: install chromium
 #        uses: browser-actions/setup-chrome@v1
 #        with:
 #          chrome-version: stable
 
-#      - name: install chrome
-#        uses: browser-actions/setup-chrome@v1
-#        with:
-#          chrome-version: stable
+      - name: install chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
 
       - name: install firefox
         uses: browser-actions/setup-firefox@v1
