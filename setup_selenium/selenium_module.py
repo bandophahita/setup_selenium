@@ -4,7 +4,7 @@ import errno
 import logging
 import os as os
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, TypeAlias
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchWindowException, WebDriverException
@@ -21,9 +21,10 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager
 if TYPE_CHECKING:
     from collections.abc import Mapping
 
+    from selenium.webdriver import Chrome, Edge, Firefox
     from selenium.webdriver.common.options import ArgOptions
 
-    typeWebDriver = webdriver.Firefox | webdriver.Chrome | webdriver.Edge
+    T_WebDriver: TypeAlias = Firefox | Chrome | Edge
 
 __all__ = ["SetupSelenium"]
 
@@ -100,7 +101,7 @@ class SetupSelenium:
 
         driver_path = SetupSelenium.install_driver(browser, driver_version)
 
-        self.driver: typeWebDriver = self.create_driver(
+        self.driver: T_WebDriver = self.create_driver(
             browser=browser,
             headless=headless,
             enable_log_performance=enable_log_performance,
@@ -191,9 +192,9 @@ class SetupSelenium:
         log_dir: str = "./logs",
         binary: str | None = None,
         driver_path: str | None = None,
-    ) -> typeWebDriver:
+    ) -> T_WebDriver:
         browser = browser.lower()
-        driver: typeWebDriver
+        driver: T_WebDriver
         if browser == Browser.FIREFOX:
             driver = SetupSelenium.firefox(
                 headless=headless,
