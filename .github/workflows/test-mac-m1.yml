@@ -28,6 +28,7 @@ jobs:
 
     steps:
       # installs the x86 version :(
+      # xattr -cr /Applications/Chromium.app
       - name: Install chromium
         run: |
           brew tap mtslzr/marmaduke-chromium

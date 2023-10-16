@@ -7,7 +7,7 @@ authors = ["Marcel Wilson <trenchrats@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-selenium = "4.12.0"
+selenium = "<=4.12.0"
 webdriver-manager = "*"
 #webdriver-manager = { git = "git@github.com:SergeyPirogov/webdriver_manager.git", branch = "master"}
 semantic-version = "*"
