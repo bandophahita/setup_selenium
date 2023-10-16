@@ -340,12 +340,12 @@ class SetupSelenium:
         if binary:
             options.binary_location = binary
 
-        options.headless = headless
+        # options.headless = headless
         # This is the new way to run headless. Unfortunately it crashes a lot.
         # https://crbug.com/chromedriver/4353
         # https://crbug.com/chromedriver/4406
-        # if headless:
-        #     options.add_argument("--headless=new")  # noqa: ERA001
+        if headless:
+            options.add_argument("--headless")
 
         logging_prefs = {"browser": "OFF", "performance": "OFF", "driver": "OFF"}
 
@@ -456,13 +456,11 @@ class SetupSelenium:
         if binary:
             options.binary_location = binary
 
-        options.headless = headless
-
         # This is the new way to run headless in the future. Unfortunately it crashes a lot.  # noqa: E501
         # https://crbug.com/chromedriver/4353
         # https://crbug.com/chromedriver/4406
-        # if headless:
-        #     options.add_argument("--headless=new")  # noqa: ERA001
+        if headless:
+            options.add_argument("--headless")
 
         logging_prefs = {"browser": "OFF", "performance": "OFF", "driver": "OFF"}
 
@@ -575,8 +573,9 @@ class SetupSelenium:
         if binary:
             options.binary_location = binary
 
-        options.headless = headless
-
+        if headless:
+            options.add_argument("--headless")
+            
         logging_prefs = {"browser": "OFF", "performance": "OFF", "driver": "OFF"}
 
         if enable_log_console:
