@@ -54,7 +54,7 @@ def test_can_be_instantiated() -> None:
 
 def test_chrome_service(create_logger: logging.Logger) -> None:
     set_logger(create_logger)
-    driver = SetupSelenium.chrome(headless=False)
+    driver = SetupSelenium.chrome(headless=True)
     assert driver.service.is_connectable()
 
 

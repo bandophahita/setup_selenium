@@ -46,7 +46,7 @@ class StreamToLogger:
         return False
 
 
-sl = StreamToLogger()
+# sl = StreamToLogger()
 
 
 def create_logger(name: str) -> logging.Logger:
@@ -186,7 +186,8 @@ class SetupSelenium:
         driver_path = output["driver_path"]
         browser_path = output["browser_path"]
 
-        logger.debug(f"installed chromedriver {driver_path}")
+        logger.debug(f"Driver path: {driver_path}")
+        logger.debug(f"Browser path: {browser_path}")
 
         return driver_path, browser_path
 
@@ -280,12 +281,12 @@ class SetupSelenium:
             service = FirefoxService(
                 executable_path=driver_path,
                 log_path=logpath,
-                log_output=sl,  # type: ignore[arg-type]
+                # log_output=sl,  # type: ignore[arg-type]
             )
         else:
             service = FirefoxService(
                 log_path=logpath,
-                log_output=sl,  # type: ignore[arg-type]
+                # log_output=sl,  # type: ignore[arg-type]
             )
 
         driver = webdriver.Firefox(service=service, options=options)
@@ -386,13 +387,13 @@ class SetupSelenium:
                 executable_path=driver_path,
                 service_args=args,
                 log_path=logpath,
-                log_output=sl,  # type: ignore[arg-type]
+                # log_output=sl,  # type: ignore[arg-type]
             )
         else:
             service = ChromeService(
                 service_args=args,
                 log_path=logpath,
-                log_output=sl,  # type: ignore[arg-type]
+                # log_output=sl,  # type: ignore[arg-type]
             )
 
         driver = webdriver.Chrome(service=service, options=options)
@@ -527,13 +528,13 @@ class SetupSelenium:
                 executable_path=driver_path,
                 service_args=args,
                 log_path=logpath,
-                log_output=sl,  # type: ignore[arg-type]
+                # log_output=sl,  # type: ignore[arg-type]
             )
         else:
             service = EdgeService(
                 service_args=args,
                 log_path=logpath,
-                log_output=sl,  # type: ignore[arg-type]
+                # log_output=sl,  # type: ignore[arg-type]
             )
         driver = webdriver.Edge(service=service, options=options)
 
