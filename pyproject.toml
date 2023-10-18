@@ -1,15 +1,13 @@
 [tool.poetry]
 name = "setup_selenium"
-version = "0.0.1"
+version = "0.0.2"
 description = "Setup Selenium for automation testing"
 authors = ["Marcel Wilson <trenchrats@gmail.com>"]
 
 
 [tool.poetry.dependencies]
 python = "^3.10"
-selenium = "*"
-webdriver-manager = "*"
-#webdriver-manager = { git = "git@github.com:SergeyPirogov/webdriver_manager.git", branch = "master"}
+selenium = ">=4.7.0"
 semantic-version = "*"
 
 # poetry add {package} -G dev

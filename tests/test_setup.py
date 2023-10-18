@@ -14,25 +14,35 @@ if TYPE_CHECKING:
     from _pytest.logging import LogCaptureFixture
 
 
-# these require installation of the browsers
+# these require installation of the browsers to pass
 def test_install_chrome() -> None:
-    path = SetupSelenium.install_driver(Browser.CHROME)
-    assert os.path.exists(path)
+    path1, path2 = SetupSelenium.install_driver(Browser.CHROME, install_browser=False)
+    path3, path4 = SetupSelenium.install_driver(Browser.CHROME, install_browser=True)
+    assert os.path.exists(path1)
+    assert os.path.exists(path2)
+    assert os.path.exists(path3)
+    assert os.path.exists(path4)
+    assert path2 != path4
 
 
 def test_install_firefox() -> None:
-    path = SetupSelenium.install_driver(Browser.FIREFOX)
-    assert os.path.exists(path)
-
-
-def test_install_chromium() -> None:
-    path = SetupSelenium.install_driver(Browser.CHROMIUM)
-    assert os.path.exists(path)
+    path1, path2 = SetupSelenium.install_driver(Browser.FIREFOX, install_browser=False)
+    path3, path4 = SetupSelenium.install_driver(Browser.FIREFOX, install_browser=True)
+    assert os.path.exists(path1)
+    assert os.path.exists(path2)
+    assert os.path.exists(path3)
+    assert os.path.exists(path4)
+    assert path2 != path4
 
 
 def test_install_edge() -> None:
-    path = SetupSelenium.install_driver(Browser.EDGE)
-    assert os.path.exists(path)
+    path1, path2 = SetupSelenium.install_driver(Browser.EDGE, install_browser=False)
+    path3, path4 = SetupSelenium.install_driver(Browser.EDGE, install_browser=True)
+    assert os.path.exists(path1)
+    assert os.path.exists(path2)
+    assert os.path.exists(path3)
+    assert os.path.exists(path4)
+    assert path2 != path4
 
 
 def test_can_be_instantiated() -> None:
@@ -40,6 +50,12 @@ def test_can_be_instantiated() -> None:
     assert isinstance(s, SetupSelenium)
     assert isinstance(s.driver, webdriver.Firefox | webdriver.Chrome | webdriver.Edge)
     assert s.driver.service.is_connectable()
+
+
+def test_chrome_service(create_logger: logging.Logger) -> None:
+    set_logger(create_logger)
+    driver = SetupSelenium.chrome(headless=False)
+    assert driver.service.is_connectable()
 
 
 @pytest.fixture
@@ -67,7 +83,7 @@ def test_custom_logger(
         SetupSelenium(headless=True)
 
     assert "initializing chromedriver" in caplog.messages
-    assert "====== WebDriver manager ======" in caplog.messages
+    assert in_caplog("Selenium Manager binary", caplog)
     assert (
         "--disable-extensions\n"
         "--allow-running-insecure-content\n"
@@ -95,7 +111,7 @@ def test_default_logger(
         SetupSelenium(headless=True)
 
     assert "initializing chromedriver" in caplog.messages
-    assert "====== WebDriver manager ======" in caplog.messages
+    assert in_caplog("Selenium Manager binary", caplog)
     assert (
         "--disable-extensions\n"
         "--allow-running-insecure-content\n"

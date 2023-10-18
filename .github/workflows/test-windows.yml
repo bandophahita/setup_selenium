@@ -27,10 +27,10 @@ jobs:
         ]
 
     steps:
-      - name: Install chromium
-        shell: powershell
-        run: |
-          choco install chromium --no-progress -y --force
+#      - name: Install chromium
+#        shell: powershell
+#        run: |
+#          choco install chromium --no-progress -y --force
 
       - name: install chrome
         uses: browser-actions/setup-chrome@v1

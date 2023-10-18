@@ -29,12 +29,12 @@ jobs:
     steps:
       # installs the x86 version :(
       # xattr -cr /Applications/Chromium.app
-      - name: Install chromium
-        run: |
-          brew tap mtslzr/marmaduke-chromium
-          brew update
-          brew install marmaduke-chromium --no-quarantine
-          /Applications/Chromium.app/Contents/MacOS/Chromium --version
+#      - name: Install chromium
+#        run: |
+#          brew tap mtslzr/marmaduke-chromium
+#          brew update
+#          brew install marmaduke-chromium --no-quarantine
+#          /Applications/Chromium.app/Contents/MacOS/Chromium --version
 
       - name: install chrome
         uses: browser-actions/setup-chrome@v1

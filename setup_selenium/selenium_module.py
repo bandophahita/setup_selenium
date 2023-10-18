@@ -9,14 +9,10 @@ from typing import TYPE_CHECKING, TypeAlias
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchWindowException, WebDriverException
 from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.common.selenium_manager import SeleniumManager
 from selenium.webdriver.edge.service import Service as EdgeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from semantic_version import Version  # type: ignore
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.core.logger import set_logger as wdm_set_logger
-from webdriver_manager.core.os_manager import ChromeType
-from webdriver_manager.firefox import GeckoDriverManager
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 if TYPE_CHECKING:
     from collections.abc import Mapping
@@ -29,6 +25,30 @@ if TYPE_CHECKING:
 __all__ = ["SetupSelenium"]
 
 
+class StreamToLogger:
+    """
+    Fake file-like stream object that redirects writes to a logger instance.
+    """
+
+    def __init__(self) -> None:
+        return
+
+    def write(self, message: str) -> None:
+        logger.log(logging.INFO, message.rstrip())
+
+    def fileno(self) -> int:
+        return 1
+
+    def flush(self) -> None:
+        return
+
+    def isatty(self) -> bool:
+        return False
+
+
+sl = StreamToLogger()
+
+
 def create_logger(name: str) -> logging.Logger:
     __logger: type[logging.Logger] = logging.getLoggerClass()
     logr: logging.Logger = logging.getLogger(name)
@@ -38,7 +58,6 @@ def create_logger(name: str) -> logging.Logger:
 
 
 logger = create_logger("sel")
-wdm_set_logger(logger)
 
 
 def set_logger(logr: logging.Logger) -> None:
@@ -52,13 +71,11 @@ def set_logger(logr: logging.Logger) -> None:
     # Bind the logger input to the global logger
     global logger  # noqa: PLW0603
     logger = logr
-    wdm_set_logger(logger)
 
 
 class Browser(str, Enum):
     EDGE = "edge"
     CHROME = "chrome"
-    CHROMIUM = "chromium"
     FIREFOX = "firefox"
 
 
@@ -99,7 +116,7 @@ class SetupSelenium:
         self.timeout: int = timeout
         self.baseurl: str = baseurl
 
-        driver_path = SetupSelenium.install_driver(browser, driver_version)
+        driver_path, binary_path = SetupSelenium.install_driver(browser, driver_version)
 
         self.driver: T_WebDriver = self.create_driver(
             browser=browser,
@@ -108,6 +125,7 @@ class SetupSelenium:
             enable_log_console=enable_log_console,
             enable_log_driver=enable_log_driver,
             log_dir=log_path,
+            binary=binary_path,
             driver_path=driver_path,
         )
 
@@ -148,39 +166,29 @@ class SetupSelenium:
     def install_driver(
         browser: str,
         version: str | None = None,
-    ) -> str:
-        browser = browser.lower()
+        install_browser: bool = False,
+    ) -> tuple[str, str]:
+        """install the webdriver and browser if needed."""
+        browser = Browser[browser.upper()].lower()
         version = version or None
 
-        if browser == Browser.FIREFOX:
-            driver_path = GeckoDriverManager(version).install()
-            if not os.path.exists(f"{driver_path}"):
-                raise FileNotFoundError("Geckodriver was not downloaded.")
-            logger.debug(f"installed chromedriver {driver_path}")
+        sm = SeleniumManager()
+        args = [f"{sm.get_binary()}", "--browser", browser]
 
-        elif browser in Browser.CHROME:
-            driver_path = ChromeDriverManager(version).install()
+        if version:
+            args.append("--driver-version")
+            args.append(version)
 
-            if not os.path.exists(f"{driver_path}"):
-                raise FileNotFoundError("Chromedriver was not downloaded.")
-            logger.debug(f"installed chromedriver {driver_path}")
+        if install_browser:
+            args.append("--force-browser-download")
 
-        elif browser == Browser.CHROMIUM:
-            driver_path = ChromeDriverManager(
-                version, chrome_type=ChromeType.CHROMIUM
-            ).install()
-            logger.debug(f"installed chromedriver {driver_path}")
+        output = sm.run(args)
+        driver_path = output["driver_path"]
+        browser_path = output["browser_path"]
 
-        elif browser == Browser.EDGE:
-            driver_path = EdgeChromiumDriverManager(version).install()
+        logger.debug(f"installed chromedriver {driver_path}")
 
-            if not os.path.exists(f"{driver_path}"):
-                raise FileNotFoundError("Edgedriver was not downloaded.")
-            logger.debug(f"installed chromedriver {driver_path}")
-        else:
-            raise ValueError(f"Unknown browser: {browser}")
-
-        return driver_path
+        return driver_path, browser_path
 
     @staticmethod
     def create_driver(
@@ -206,17 +214,6 @@ class SetupSelenium:
 
         elif browser == Browser.CHROME:
             driver = SetupSelenium.chrome(
-                headless=headless,
-                enable_log_performance=enable_log_performance,
-                enable_log_console=enable_log_console,
-                enable_log_driver=enable_log_driver,
-                log_dir=log_dir,
-                binary=binary,
-                driver_path=driver_path,
-            )
-
-        elif browser == Browser.CHROMIUM:
-            driver = SetupSelenium.chromium(
                 headless=headless,
                 enable_log_performance=enable_log_performance,
                 enable_log_console=enable_log_console,
@@ -280,9 +277,16 @@ class SetupSelenium:
             logpath = os.path.join(lp, "geckodriver.log")
 
         if driver_path:
-            service = FirefoxService(executable_path=driver_path, log_path=logpath)
+            service = FirefoxService(
+                executable_path=driver_path,
+                log_path=logpath,
+                log_output=sl,  # type: ignore[arg-type]
+            )
         else:
-            service = FirefoxService(log_path=logpath)
+            service = FirefoxService(
+                log_path=logpath,
+                log_output=sl,  # type: ignore[arg-type]
+            )
 
         driver = webdriver.Firefox(service=service, options=options)
 
@@ -314,9 +318,10 @@ class SetupSelenium:
             "--disable-dev-shm-usage",
             # it's possible we no longer need to do these
             # "enable-automation",  # https://stackoverflow.com/a/43840128/1689770
-            # "--disable-browser-side-navigation",  # https://stackoverflow.com/a/49123152/1689770
+            # "--disable-browser-side-navigation",
+            # https://stackoverflow.com/a/49123152/1689770
             "--disable-gpu",  # https://stackoverflow.com/q/51959986/2532408
-            # # https://groups.google.com/forum/m/#!topic/chromedriver-users/ktp-s_0M5NM[21-40]
+            # https://groups.google.com/forum/m/#!topic/chromedriver-users/ktp-s_0M5NM[21-40]
             # "--enable-features=NetworkService,NetworkServiceInProcess",
         )
 
@@ -381,11 +386,13 @@ class SetupSelenium:
                 executable_path=driver_path,
                 service_args=args,
                 log_path=logpath,
+                log_output=sl,  # type: ignore[arg-type]
             )
         else:
             service = ChromeService(
                 service_args=args,
                 log_path=logpath,
+                log_output=sl,  # type: ignore[arg-type]
             )
 
         driver = webdriver.Chrome(service=service, options=options)
@@ -402,15 +409,11 @@ class SetupSelenium:
             logger.critical(drvmsg)
             logger.critical(bsrmsg)
             logger.critical("chromedriver and browser versions not in sync!!")
-            logger.warning(
-                "https://chromedriver.chromium.org/downloads for the latest version"
-            )
         else:
             logger.info(drvmsg)
             logger.info(bsrmsg)
         SetupSelenium.log_options(options)
 
-        # set_throttle(driver)  # noqa: ERA001
         return driver
 
     @staticmethod
@@ -440,93 +443,6 @@ class SetupSelenium:
             upload_throughput=net_up,
         )
         driver.execute_cdp_cmd("Emulation.setCPUThrottlingRate", {"rate": 100})
-
-    @staticmethod
-    def chromium(
-        headless: bool = False,
-        enable_log_performance: bool = False,
-        enable_log_console: bool = False,
-        enable_log_driver: bool = False,
-        log_dir: str = "./logs",
-        driver_path: str | None = None,
-        binary: str | None = None,
-        options: webdriver.ChromeOptions = None,
-    ) -> webdriver.Chrome:
-        options = options or SetupSelenium.chrome_options()
-        if binary:
-            options.binary_location = binary
-
-        # This is the new way to run headless in the future. Unfortunately it crashes a lot.  # noqa: E501
-        # https://crbug.com/chromedriver/4353
-        # https://crbug.com/chromedriver/4406
-        if headless:
-            options.add_argument("--headless")
-
-        logging_prefs = {"browser": "OFF", "performance": "OFF", "driver": "OFF"}
-
-        if enable_log_console:
-            logging_prefs["browser"] = "ALL"
-
-        # by default performance is disabled.
-        if enable_log_performance:
-            logging_prefs["performance"] = "ALL"
-            options.set_capability(
-                "perfLoggingPrefs",
-                {
-                    "enableNetwork": True,
-                    "enablePage": False,
-                    "enableTimeline": False,
-                },
-            )
-
-        args: list | None = None
-        logpath = None
-        if enable_log_driver:
-            lp = os.path.abspath(os.path.expanduser(log_dir))
-            logpath = os.path.join(lp, "chromedriver.log")
-            args = [
-                # "--verbose"
-            ]
-            logging_prefs["driver"] = "ALL"
-
-        options.set_capability("goog:loggingPrefs", logging_prefs)
-
-        logger.debug("initializing chromedriver")
-        if driver_path:
-            service = ChromeService(
-                executable_path=driver_path,
-                service_args=args,
-                log_path=logpath,
-            )
-        else:
-            service = ChromeService(
-                service_args=args,
-                log_path=logpath,
-            )
-
-        driver = webdriver.Chrome(service=service, options=options)
-
-        driver_vers = driver.capabilities["chrome"]["chromedriverVersion"].split(" ")[0]
-        browser_vers = driver.capabilities["browserVersion"]
-
-        drvmsg = f"Driver info: chromedriver={driver_vers}"
-        bsrmsg = f"Browser info:    chromium={browser_vers}"
-
-        dver = Version.coerce(driver_vers)
-        bver = Version.coerce(browser_vers)
-        if dver.major != bver.major:
-            logger.critical(drvmsg)
-            logger.critical(bsrmsg)
-            logger.critical("chromedriver and browser versions not in sync!!")
-            logger.warning(
-                "https://chromedriver.chromium.org/downloads for the latest version"
-            )
-        else:
-            logger.info(drvmsg)
-            logger.info(bsrmsg)
-        SetupSelenium.log_options(options)
-
-        return driver
 
     @staticmethod
     def edge_options() -> webdriver.EdgeOptions:
@@ -575,7 +491,7 @@ class SetupSelenium:
 
         if headless:
             options.add_argument("--headless")
-            
+
         logging_prefs = {"browser": "OFF", "performance": "OFF", "driver": "OFF"}
 
         if enable_log_console:
@@ -611,11 +527,13 @@ class SetupSelenium:
                 executable_path=driver_path,
                 service_args=args,
                 log_path=logpath,
+                log_output=sl,  # type: ignore[arg-type]
             )
         else:
             service = EdgeService(
                 service_args=args,
                 log_path=logpath,
+                log_output=sl,  # type: ignore[arg-type]
             )
         driver = webdriver.Edge(service=service, options=options)
 
