@@ -539,17 +539,6 @@ class SetupSelenium:
             self.main_window_handle = window
         return self.main_window_handle
 
-    # not sure we need these -- commenting out to verify it doesn't break something
-    ############################################################################
-    # def close(self) -> None:
-    #     if self.driver is not None:
-    #         self.driver.close()
-    #
-    # ############################################################################
-    # def quit(self) -> None:  # noqa: A003
-    #     if self.driver is not None:
-    #         self.driver.quit()
-
     ############################################################################
     def __repr__(self) -> str:
         browser = self.driver.name if self.driver is not None else "NoBrowserSet"
