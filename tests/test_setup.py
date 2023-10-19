@@ -34,6 +34,7 @@ def test_install_firefox() -> None:
     assert os.path.exists(path4)
     assert path2 != path4
 
+
 @pytest.mark.slow
 def test_install_edge() -> None:
     path1, path2 = SetupSelenium.install_driver(Browser.EDGE, install_browser=False)
@@ -79,18 +80,18 @@ def test_default_logger(
 
     assert "initializing chromedriver" in caplog.messages
     assert (
-               "--disable-extensions\n"
-               "--allow-running-insecure-content\n"
-               "--ignore-certificate-errors\n"
-               "--disable-single-click-autofill\n"
-               "--disable-autofill-keyboard-accessory-view[8]\n"
-               "--disable-full-form-autofill-ios\n"
-               "--disable-infobars\n"
-               "--no-sandbox\n"
-               "--disable-dev-shm-usage\n"
-               "--disable-gpu\n"
-               "--headless"
-           ) in caplog.messages
+        "--disable-extensions\n"
+        "--allow-running-insecure-content\n"
+        "--ignore-certificate-errors\n"
+        "--disable-single-click-autofill\n"
+        "--disable-autofill-keyboard-accessory-view[8]\n"
+        "--disable-full-form-autofill-ios\n"
+        "--disable-infobars\n"
+        "--no-sandbox\n"
+        "--disable-dev-shm-usage\n"
+        "--disable-gpu\n"
+        "--headless"
+    ) in caplog.messages
 
     assert in_caplog("Driver info: chromedriver=", caplog)
     assert in_caplog("Browser info:      chrome=", caplog)
