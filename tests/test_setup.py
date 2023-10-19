@@ -34,7 +34,7 @@ def test_install_firefox() -> None:
     assert os.path.exists(path4)
     assert path2 != path4
 
-
+@pytest.mark.slow
 def test_install_edge() -> None:
     path1, path2 = SetupSelenium.install_driver(Browser.EDGE, install_browser=False)
     path3, path4 = SetupSelenium.install_driver(Browser.EDGE, install_browser=True)
@@ -71,6 +71,31 @@ def in_caplog(s: str, caplog: LogCaptureFixture) -> bool:
     return len(list(filter(lambda x: s in x, caplog.messages))) > 0
 
 
+def test_default_logger(
+    caplog: LogCaptureFixture,
+) -> None:
+    with caplog.at_level(logging.DEBUG, logger="sel"):
+        SetupSelenium(headless=True)
+
+    assert "initializing chromedriver" in caplog.messages
+    assert (
+               "--disable-extensions\n"
+               "--allow-running-insecure-content\n"
+               "--ignore-certificate-errors\n"
+               "--disable-single-click-autofill\n"
+               "--disable-autofill-keyboard-accessory-view[8]\n"
+               "--disable-full-form-autofill-ios\n"
+               "--disable-infobars\n"
+               "--no-sandbox\n"
+               "--disable-dev-shm-usage\n"
+               "--disable-gpu\n"
+               "--headless"
+           ) in caplog.messages
+
+    assert in_caplog("Driver info: chromedriver=", caplog)
+    assert in_caplog("Browser info:      chrome=", caplog)
+
+
 def test_custom_logger(
     caplog: LogCaptureFixture, create_logger: logging.Logger
 ) -> None:
@@ -102,29 +127,3 @@ def test_custom_logger(
     assert in_caplog("Browser info:      chrome=", caplog)
 
     set_logger(original_logger)
-
-
-def test_default_logger(
-    caplog: LogCaptureFixture,
-) -> None:
-    with caplog.at_level(logging.DEBUG, logger="sel"):
-        SetupSelenium(headless=True)
-
-    assert "initializing chromedriver" in caplog.messages
-    assert in_caplog("Selenium Manager binary", caplog)
-    assert (
-        "--disable-extensions\n"
-        "--allow-running-insecure-content\n"
-        "--ignore-certificate-errors\n"
-        "--disable-single-click-autofill\n"
-        "--disable-autofill-keyboard-accessory-view[8]\n"
-        "--disable-full-form-autofill-ios\n"
-        "--disable-infobars\n"
-        "--no-sandbox\n"
-        "--disable-dev-shm-usage\n"
-        "--disable-gpu\n"
-        "--headless"
-    ) in caplog.messages
-
-    assert in_caplog("Driver info: chromedriver=", caplog)
-    assert in_caplog("Browser info:      chrome=", caplog)

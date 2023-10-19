@@ -24,10 +24,10 @@ isort:
 	isort .
 
 ruff:
-	ruff .
+	ruff check .
 
 ruff-fix:
-	ruff . --fix --show-fixes
+	ruff check . --fix --show-fixes
 
 mypy:
 	mypy .
