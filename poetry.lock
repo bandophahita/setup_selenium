@@ -4,7 +4,7 @@
 name = "astroid"
 version = "3.0.1"
 description = "An abstract syntax tree for Python with inference support."
-optional = false
+optional = true
 python-versions = ">=3.8.0"
 files = [
     {file = "astroid-3.0.1-py3-none-any.whl", hash = "sha256:7d5895c9825e18079c5aeac0572bc2e4c83205c95d416e0b4fee8bc361d2d9ca"},
@@ -36,7 +36,7 @@ tests-no-zope = ["cloudpickle", "hypothesis", "mypy (>=1.1.1)", "pympler", "pyte
 name = "black"
 version = "23.10.0"
 description = "The uncompromising code formatter."
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "black-23.10.0-cp310-cp310-macosx_10_16_arm64.whl", hash = "sha256:f8dc7d50d94063cdfd13c82368afd8588bac4ce360e4224ac399e769d6704e98"},
@@ -78,7 +78,7 @@ uvloop = ["uvloop (>=0.15.2)"]
 name = "cachetools"
 version = "5.3.1"
 description = "Extensible memoizing collections and decorators"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "cachetools-5.3.1-py3-none-any.whl", hash = "sha256:95ef631eeaea14ba2e36f06437f36463aac3a096799e876ee55e5cdccb102590"},
@@ -164,7 +164,7 @@ pycparser = "*"
 name = "chardet"
 version = "5.2.0"
 description = "Universal encoding detector for Python 3"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "chardet-5.2.0-py3-none-any.whl", hash = "sha256:e1cf59446890a00105fe7b7912492ea04b6e6f06d4b742b2c788469e34c82970"},
@@ -175,7 +175,7 @@ files = [
 name = "click"
 version = "8.1.7"
 description = "Composable command line interface toolkit"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "click-8.1.7-py3-none-any.whl", hash = "sha256:ae74fb96c20a0277a1d615f1e4d73c8414f5a98db8b799a7931d1582f3390c28"},
@@ -189,7 +189,7 @@ colorama = {version = "*", markers = "platform_system == \"Windows\""}
 name = "colorama"
 version = "0.4.6"
 description = "Cross-platform colored terminal text."
-optional = false
+optional = true
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
 files = [
     {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
@@ -200,7 +200,7 @@ files = [
 name = "coverage"
 version = "7.3.2"
 description = "Code coverage measurement for Python"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "coverage-7.3.2-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:d872145f3a3231a5f20fd48500274d7df222e291d90baa2026cc5152b7ce86bf"},
@@ -264,7 +264,7 @@ toml = ["tomli"]
 name = "dill"
 version = "0.3.7"
 description = "serialize all of Python"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "dill-0.3.7-py3-none-any.whl", hash = "sha256:76b122c08ef4ce2eedcd4d1abd8e641114bfc6c2867f49f3c41facf65bf19f5e"},
@@ -278,7 +278,7 @@ graph = ["objgraph (>=1.7.2)"]
 name = "distlib"
 version = "0.3.7"
 description = "Distribution utilities"
-optional = false
+optional = true
 python-versions = "*"
 files = [
     {file = "distlib-0.3.7-py2.py3-none-any.whl", hash = "sha256:2e24928bc811348f0feb63014e97aaae3037f2cf48712d51ae61df7fd6075057"},
@@ -303,7 +303,7 @@ test = ["pytest (>=6)"]
 name = "filelock"
 version = "3.12.4"
 description = "A platform independent file lock."
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "filelock-3.12.4-py3-none-any.whl", hash = "sha256:08c21d87ded6e2b9da6728c3dff51baf1dcecf973b768ef35bcbc3447edb9ad4"},
@@ -319,7 +319,7 @@ typing = ["typing-extensions (>=4.7.1)"]
 name = "flake8"
 version = "6.1.0"
 description = "the modular source code checker: pep8 pyflakes and co"
-optional = false
+optional = true
 python-versions = ">=3.8.1"
 files = [
     {file = "flake8-6.1.0-py2.py3-none-any.whl", hash = "sha256:ffdfce58ea94c6580c77888a86506937f9a1a227dfcd15f245d694ae20a6b6e5"},
@@ -357,7 +357,7 @@ files = [
 name = "iniconfig"
 version = "2.0.0"
 description = "brain-dead simple config-ini parsing"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "iniconfig-2.0.0-py3-none-any.whl", hash = "sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374"},
@@ -368,7 +368,7 @@ files = [
 name = "isort"
 version = "5.12.0"
 description = "A Python utility / library to sort Python imports."
-optional = false
+optional = true
 python-versions = ">=3.8.0"
 files = [
     {file = "isort-5.12.0-py3-none-any.whl", hash = "sha256:f84c2818376e66cf843d497486ea8fed8700b340f308f076c6fb1229dff318b6"},
@@ -385,7 +385,7 @@ requirements-deprecated-finder = ["pip-api", "pipreqs"]
 name = "mccabe"
 version = "0.7.0"
 description = "McCabe checker, plugin for flake8"
-optional = false
+optional = true
 python-versions = ">=3.6"
 files = [
     {file = "mccabe-0.7.0-py2.py3-none-any.whl", hash = "sha256:6c2d30ab6be0e4a46919781807b4f0d834ebdd6c6e3dca0bda5a15f863427b6e"},
@@ -396,7 +396,7 @@ files = [
 name = "mypy"
 version = "1.6.1"
 description = "Optional static typing for Python"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "mypy-1.6.1-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:e5012e5cc2ac628177eaac0e83d622b2dd499e28253d4107a08ecc59ede3fc2c"},
@@ -442,7 +442,7 @@ reports = ["lxml"]
 name = "mypy-extensions"
 version = "1.0.0"
 description = "Type system extensions for programs checked with the mypy type checker."
-optional = false
+optional = true
 python-versions = ">=3.5"
 files = [
     {file = "mypy_extensions-1.0.0-py3-none-any.whl", hash = "sha256:4392f6c0eb8a5668a69e23d168ffa70f0be9ccfd32b5cc2d26a34ae5b844552d"},
@@ -467,7 +467,7 @@ attrs = ">=19.2.0"
 name = "packaging"
 version = "23.2"
 description = "Core utilities for Python packages"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "packaging-23.2-py3-none-any.whl", hash = "sha256:8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7"},
@@ -478,7 +478,7 @@ files = [
 name = "pathspec"
 version = "0.11.2"
 description = "Utility library for gitignore style pattern matching of file paths."
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "pathspec-0.11.2-py3-none-any.whl", hash = "sha256:1d6ed233af05e679efb96b1851550ea95bbb64b7c490b0f5aa52996c11e92a20"},
@@ -489,7 +489,7 @@ files = [
 name = "platformdirs"
 version = "3.11.0"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "platformdirs-3.11.0-py3-none-any.whl", hash = "sha256:e9d171d00af68be50e9202731309c4e658fd8bc76f55c11c7dd760d023bda68e"},
@@ -504,7 +504,7 @@ test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=7.4)", "pytest-co
 name = "pluggy"
 version = "1.3.0"
 description = "plugin and hook calling mechanisms for python"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "pluggy-1.3.0-py3-none-any.whl", hash = "sha256:d89c696a773f8bd377d18e5ecda92b7a3793cbe66c87060a6fb58c7b6e1061f7"},
@@ -519,7 +519,7 @@ testing = ["pytest", "pytest-benchmark"]
 name = "pycodestyle"
 version = "2.11.1"
 description = "Python style guide checker"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "pycodestyle-2.11.1-py2.py3-none-any.whl", hash = "sha256:44fe31000b2d866f2e41841b18528a505fbd7fef9017b04eff4e2648a0fadc67"},
@@ -541,7 +541,7 @@ files = [
 name = "pyflakes"
 version = "3.1.0"
 description = "passive checker of Python programs"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "pyflakes-3.1.0-py2.py3-none-any.whl", hash = "sha256:4132f6d49cb4dae6819e5379898f2b8cce3c5f23994194c24b77d5da2e36f774"},
@@ -552,7 +552,7 @@ files = [
 name = "pylint"
 version = "3.0.1"
 description = "python code static checker"
-optional = false
+optional = true
 python-versions = ">=3.8.0"
 files = [
     {file = "pylint-3.0.1-py3-none-any.whl", hash = "sha256:9c90b89e2af7809a1697f6f5f93f1d0e518ac566e2ac4d2af881a69c13ad01ea"},
@@ -581,7 +581,7 @@ testutils = ["gitpython (>3)"]
 name = "pyproject-api"
 version = "1.6.1"
 description = "API to interact with the python pyproject.toml based projects"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "pyproject_api-1.6.1-py3-none-any.whl", hash = "sha256:4c0116d60476b0786c88692cf4e325a9814965e2469c5998b830bba16b183675"},
@@ -612,7 +612,7 @@ files = [
 name = "pytest"
 version = "7.4.2"
 description = "pytest: simple powerful testing with Python"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "pytest-7.4.2-py3-none-any.whl", hash = "sha256:1d881c6124e08ff0a1bb75ba3ec0bfd8b5354a01c194ddd5a0a870a48d99b002"},
@@ -634,7 +634,7 @@ testing = ["argcomplete", "attrs (>=19.2.0)", "hypothesis (>=3.56)", "mock", "no
 name = "ruff"
 version = "0.1.0"
 description = "An extremely fast Python linter, written in Rust."
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "ruff-0.1.0-py3-none-macosx_10_7_x86_64.whl", hash = "sha256:87114e254dee35e069e1b922d85d4b21a5b61aec759849f393e1dbb308a00439"},
@@ -692,7 +692,7 @@ doc = ["Sphinx", "sphinx-rtd-theme"]
 name = "setuptools"
 version = "68.2.2"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "setuptools-68.2.2-py3-none-any.whl", hash = "sha256:b454a35605876da60632df1a60f736524eb73cc47bbc9f3f1ef1b644de74fd2a"},
@@ -730,7 +730,7 @@ files = [
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
@@ -741,7 +741,7 @@ files = [
 name = "tomlkit"
 version = "0.12.1"
 description = "Style preserving TOML library"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "tomlkit-0.12.1-py3-none-any.whl", hash = "sha256:712cbd236609acc6a3e2e97253dfc52d4c2082982a88f61b640ecf0817eab899"},
@@ -752,7 +752,7 @@ files = [
 name = "tox"
 version = "4.11.3"
 description = "tox is a generic virtualenv management and test command line tool"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "tox-4.11.3-py3-none-any.whl", hash = "sha256:599af5e5bb0cad0148ac1558a0b66f8fff219ef88363483b8d92a81e4246f28f"},
@@ -815,7 +815,7 @@ wsproto = ">=0.14"
 name = "typing-extensions"
 version = "4.8.0"
 description = "Backported and Experimental Type Hints for Python 3.8+"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "typing_extensions-4.8.0-py3-none-any.whl", hash = "sha256:8f92fc8806f9a6b641eaa5318da32b44d401efaac0f6678c9bc448ba3605faa0"},
@@ -846,7 +846,7 @@ zstd = ["zstandard (>=0.18.0)"]
 name = "virtualenv"
 version = "20.24.5"
 description = "Virtual Python Environment builder"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "virtualenv-20.24.5-py3-none-any.whl", hash = "sha256:b80039f280f4919c77b30f1c23294ae357c4c8701042086e3fc005963e4e537b"},
@@ -876,7 +876,11 @@ files = [
 [package.dependencies]
 h11 = ">=0.9.0,<1"
 
+[extras]
+dev = ["black", "coverage", "flake8", "mypy", "pylint", "pytest", "ruff", "setuptools", "tox"]
+test = ["pytest", "tox"]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "83b60b26090fa347a75a25cd54ce451a2fc4ebadfcf49d16aefa7530759f00ff"
+content-hash = "b7f764846360fcc91cc341944eb134d4c333bb2083a256dcfaaff2f0c81dde98"
