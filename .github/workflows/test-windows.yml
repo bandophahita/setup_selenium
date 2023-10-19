@@ -77,6 +77,9 @@ jobs:
         run: |
           poetry install --with dev
 
-      - name: Test with pytest
-        run: |
-          pytest -vv --runslow
+#      - name: Test with pytest
+#        run: |
+#          pytest -vv --runslow
+
+      - name: Test with tox
+        run: tox -- --runslow
