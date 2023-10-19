@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 from selenium import webdriver
+from selenium.common import NoSuchDriverException
 
 from setup_selenium import Browser, SetupSelenium, set_logger
 from setup_selenium.selenium_module import logger as original_logger
@@ -56,6 +57,67 @@ def test_can_be_instantiated() -> None:
 def test_chrome_service(create_logger: logging.Logger) -> None:
     set_logger(create_logger)
     driver = SetupSelenium.chrome(headless=True)
+    assert driver.service.is_connectable()
+
+
+def test_chrome_bad_driver_path() -> None:
+    with pytest.raises(NoSuchDriverException):
+        SetupSelenium.chrome(headless=True, driver_path="/fake_path/driver")
+
+
+def test_firefox_bad_driver_path() -> None:
+    with pytest.raises(NoSuchDriverException):
+        SetupSelenium.firefox(headless=True, driver_path="/fake_path/driver")
+
+
+def test_edge_bad_driver_path() -> None:
+    with pytest.raises(NoSuchDriverException):
+        SetupSelenium.edge(headless=True, driver_path="/fake_path/driver")
+
+
+def test_create_chrome_bad_driver_path() -> None:
+    with pytest.raises(NoSuchDriverException):
+        SetupSelenium.create_driver(
+            Browser.CHROME, headless=True, driver_path="/fake_path/driver"
+        )
+
+
+def test_create_firefox_bad_driver_path() -> None:
+    with pytest.raises(NoSuchDriverException):
+        SetupSelenium.create_driver(
+            Browser.FIREFOX, headless=True, driver_path="/fake_path/driver"
+        )
+
+
+def test_create_edge_bad_driver_path() -> None:
+    with pytest.raises(NoSuchDriverException):
+        SetupSelenium.create_driver(
+            Browser.EDGE, headless=True, driver_path="/fake_path/driver"
+        )
+
+
+def test_chrome_bad_binary_path(create_logger: logging.Logger) -> None:
+    set_logger(create_logger)
+    driver = SetupSelenium.create_driver(
+        Browser.CHROME, headless=True, binary="/fake_path/binary"
+    )
+    assert driver.service.is_connectable()
+
+
+def test_firefox_bad_binary_path(create_logger: logging.Logger) -> None:
+    set_logger(create_logger)
+    driver = SetupSelenium.create_driver(
+        Browser.FIREFOX, headless=True, binary="/fake_path/binary"
+    )
+    assert driver.service.is_connectable()
+
+
+@pytest.mark.slow
+def test_edge_bad_binary_path(create_logger: logging.Logger) -> None:
+    set_logger(create_logger)
+    driver = SetupSelenium.create_driver(
+        Browser.EDGE, headless=True, binary="/fake_path/binary"
+    )
     assert driver.service.is_connectable()
 
 
