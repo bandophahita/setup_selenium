@@ -25,30 +25,6 @@ if TYPE_CHECKING:
 __all__ = ["SetupSelenium"]
 
 
-class StreamToLogger:
-    """
-    Fake file-like stream object that redirects writes to a logger instance.
-    """
-
-    def __init__(self) -> None:
-        return
-
-    def write(self, message: str) -> None:
-        logger.log(logging.INFO, message.rstrip())
-
-    def fileno(self) -> int:
-        return 1
-
-    def flush(self) -> None:
-        return
-
-    def isatty(self) -> bool:
-        return False
-
-
-# sl = StreamToLogger()
-
-
 def create_logger(name: str) -> logging.Logger:
     __logger: type[logging.Logger] = logging.getLoggerClass()
     logr: logging.Logger = logging.getLogger(name)
@@ -281,12 +257,10 @@ class SetupSelenium:
             service = FirefoxService(
                 executable_path=driver_path,
                 log_path=logpath,
-                # log_output=sl,  # type: ignore[arg-type]
             )
         else:
             service = FirefoxService(
                 log_path=logpath,
-                # log_output=sl,  # type: ignore[arg-type]
             )
 
         driver = webdriver.Firefox(service=service, options=options)
@@ -311,21 +285,13 @@ class SetupSelenium:
             "--disable-single-click-autofill",
             "--disable-autofill-keyboard-accessory-view[8]",
             "--disable-full-form-autofill-ios",
-            # https://bugs.chromium.org/p/chromedriver/issues/detail?id=402#c128
-            # "--dns-prefetch-disable",
             "--disable-infobars",
             # chromedriver crashes without these two in linux
             "--no-sandbox",
             "--disable-dev-shm-usage",
             # it's possible we no longer need to do these
-            # "enable-automation",  # https://stackoverflow.com/a/43840128/1689770
-            # "--disable-browser-side-navigation",
-            # https://stackoverflow.com/a/49123152/1689770
             "--disable-gpu",  # https://stackoverflow.com/q/51959986/2532408
-            # https://groups.google.com/forum/m/#!topic/chromedriver-users/ktp-s_0M5NM[21-40]
-            # "--enable-features=NetworkService,NetworkServiceInProcess",
         )
-
         options = webdriver.ChromeOptions()
         for opt in opts:
             options.add_argument(opt)
@@ -346,10 +312,6 @@ class SetupSelenium:
         if binary:
             options.binary_location = binary
 
-        # options.headless = headless
-        # This is the new way to run headless. Unfortunately it crashes a lot.
-        # https://crbug.com/chromedriver/4353
-        # https://crbug.com/chromedriver/4406
         if headless:
             options.add_argument("--headless")
 
@@ -387,13 +349,11 @@ class SetupSelenium:
                 executable_path=driver_path,
                 service_args=args,
                 log_path=logpath,
-                # log_output=sl,  # type: ignore[arg-type]
             )
         else:
             service = ChromeService(
                 service_args=args,
                 log_path=logpath,
-                # log_output=sl,  # type: ignore[arg-type]
             )
 
         driver = webdriver.Chrome(service=service, options=options)
@@ -447,6 +407,9 @@ class SetupSelenium:
 
     @staticmethod
     def edge_options() -> webdriver.EdgeOptions:
+        logger.debug("Setting up edge options")
+        # The list of options set below mostly came from this StackOverflow post
+        # https://stackoverflow.com/q/48450594/2532408
         opts = (
             "--disable-extensions",
             "--allow-running-insecure-content",
@@ -454,18 +417,12 @@ class SetupSelenium:
             "--disable-single-click-autofill",
             "--disable-autofill-keyboard-accessory-view[8]",
             "--disable-full-form-autofill-ios",
-            # https://bugs.chromium.org/p/chromedriver/issues/detail?id=402#c128
-            # "--dns-prefetch-disable",
             "--disable-infobars",
             # edgedriver crashes without these two in linux
             "--no-sandbox",
             "--disable-dev-shm-usage",
             # it's possible we no longer need to do these
-            # "enable-automation",  # https://stackoverflow.com/a/43840128/1689770
-            # "--disable-browser-side-navigation",  # https://stackoverflow.com/a/49123152/1689770
             # "--disable-gpu",  # https://stackoverflow.com/q/51959986/2532408
-            # # https://groups.google.com/forum/m/#!topic/chromedriver-users/ktp-s_0M5NM[21-40]
-            # "--enable-features=NetworkService,NetworkServiceInProcess"  # noqa: ERA001
         )
         options = webdriver.EdgeOptions()
         for opt in opts:
@@ -483,9 +440,6 @@ class SetupSelenium:
         binary: str | None = None,
         options: webdriver.EdgeOptions = None,
     ) -> webdriver.Edge:
-        # edge
-        # https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
-
         options = options or SetupSelenium.edge_options()
         if binary:
             options.binary_location = binary
@@ -528,13 +482,11 @@ class SetupSelenium:
                 executable_path=driver_path,
                 service_args=args,
                 log_path=logpath,
-                # log_output=sl,  # type: ignore[arg-type]
             )
         else:
             service = EdgeService(
                 service_args=args,
                 log_path=logpath,
-                # log_output=sl,  # type: ignore[arg-type]
             )
         driver = webdriver.Edge(service=service, options=options)
 
