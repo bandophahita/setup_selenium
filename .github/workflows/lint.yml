@@ -26,12 +26,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-#      - name: Set SSH key for private repo access
-#        uses: webfactory/ssh-agent@v0.7.0
-#        with:
-#          ssh-private-key: |
-#            ${{ secrets.GH_CICD_SSH_PRIVATE_KEY }}
-
       - name: Setup Poetry
         uses: abatilo/actions-poetry@v2
         with:
@@ -44,7 +38,7 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: |
-          poetry install
+          poetry install --extras dev
 
       - name: Lint with black
         run: |

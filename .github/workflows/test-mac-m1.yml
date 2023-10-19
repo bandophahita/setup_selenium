@@ -27,15 +27,6 @@ jobs:
         ]
 
     steps:
-      # installs the x86 version :(
-      # xattr -cr /Applications/Chromium.app
-      - name: Install chromium
-        run: |
-          brew tap mtslzr/marmaduke-chromium
-          brew update
-          brew install marmaduke-chromium --no-quarantine
-          /Applications/Chromium.app/Contents/MacOS/Chromium --version
-
       - name: install chrome
         uses: browser-actions/setup-chrome@v1
         with:
@@ -51,11 +42,6 @@ jobs:
 
 
 
-
-
-
-
-
 ################################################################################
 # SETUP TEST 
       - uses: actions/checkout@v3
@@ -63,21 +49,12 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+          cache: 'pip'
 
-      - name: Setup Poetry
-        uses: abatilo/actions-poetry@v2
-        with:
-          poetry-version: "1.6.1"
-
-      - name: Configure Poetry
-        shell: bash
-        run: poetry config virtualenvs.create false
-
-      - name: Install dependencies
-        shell: bash
+      - name: Install dev dependencies
         run: |
-          poetry install --with dev
+          python -m pip install --upgrade pip
+          pip install tox tox-gh-actions
 
-      - name: Test with pytest
-        run: |
-          pytest -vv
+      - name: Test with tox
+        run: tox -- --runslow

@@ -1,28 +1,42 @@
 [tool.poetry]
 name = "setup_selenium"
-version = "0.0.1"
+version = "0.0.2"
 description = "Setup Selenium for automation testing"
 authors = ["Marcel Wilson <trenchrats@gmail.com>"]
 
 
 [tool.poetry.dependencies]
 python = "^3.10"
-selenium = "*"
-webdriver-manager = "*"
-#webdriver-manager = { git = "git@github.com:SergeyPirogov/webdriver_manager.git", branch = "master"}
+selenium = ">=4.7.0"
 semantic-version = "*"
+# extras
+pytest = {version="*", optional = true}
+coverage = {version="*", optional = true}
+flake8 = {version="*", optional = true}
+black = {version="*", optional = true}
+mypy = {version="*", optional = true}
+pylint = {version="*", optional = true}
+setuptools = {version="*", optional = true}
+ruff = {version="*", optional = true}
+tox = {version="*", optional = true}
 
-# poetry add {package} -G dev
-[tool.poetry.group.dev.dependencies]
-pytest = "*"
-coverage = "*"
-flake8 = "*"
-black = "*"
-mypy = "*"
-pylint = "*"
-setuptools = "*"
-ruff = "*"
-tox = "*"
+
+[tool.poetry.extras]
+dev = [
+    "pytest",
+    "coverage",
+    "flake8",
+    "black",
+    "mypy",
+    "pylint",
+    "setuptools",
+    "ruff",
+    "tox",
+]
+test = [
+    "pytest",
+    "tox",
+]
 
 
 [tool.isort]
@@ -35,7 +49,7 @@ skip = [".idea", ".tox"]
 
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.2.0"]
 build-backend = "poetry.core.masonry.api"
 
 
@@ -178,7 +192,8 @@ exclude = [
     ".idea",
 ]
 
-
+[tool.ruff.lint]
+extend-safe-fixes = ["TCH003"]
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401"]
