@@ -1,5 +1,5 @@
 requirements:
-	poetry export --without-hashes --with dev -f requirements.txt > requirements.txt
+	poetry export --without-hashes --extras dev -f requirements.txt > requirements.txt
 
 sync:
 	poetry install --extras dev --sync
