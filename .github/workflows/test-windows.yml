@@ -27,11 +27,6 @@ jobs:
         ]
 
     steps:
-#      - name: Install chromium
-#        shell: powershell
-#        run: |
-#          choco install chromium --no-progress -y --force
-
       - name: install chrome
         uses: browser-actions/setup-chrome@v1
         with:
@@ -47,14 +42,6 @@ jobs:
 
 
 
-
-
-
-
-
-
-
-
 ################################################################################
 # SETUP TEST 
       - uses: actions/checkout@v3
@@ -63,24 +50,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
-
-#      - name: Setup Poetry
-#        uses: abatilo/actions-poetry@v2
-#        with:
-#          poetry-version: "1.6.1"
-#
-#      - name: Configure Poetry
-#        shell: bash
-#        run: poetry config virtualenvs.create false
-#
-#      - name: Install dependencies
-#        shell: bash
-#        run: |
-#          poetry install --with dev
-
-#      - name: Test with pytest
-#        run: |
-#          pytest -vv --runslow
 
       - name: Install dev dependencies
         run: |
