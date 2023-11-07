@@ -44,9 +44,9 @@ jobs:
 
       - name: remove native drivers
         run: |
-          rm /usr/bin/chromedriver
-          rm /usr/bin/geckodriver
-          rm /usr/bin/msedgedriver
+          sudo rm /usr/bin/chromedriver
+          sudo rm /usr/bin/geckodriver
+          sudo rm /usr/bin/msedgedriver
 
 ################################################################################
 # SETUP TEST 
