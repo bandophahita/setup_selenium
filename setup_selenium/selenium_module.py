@@ -94,7 +94,7 @@ class SetupSelenium:
         self.log_path: str = log_path
         self.timeout: int = timeout
         self.baseurl: str = baseurl
-        
+
         driverpath, binary_path = SetupSelenium.install_driver(
             browser=browser,
             driver_version=driver_version,
@@ -103,7 +103,7 @@ class SetupSelenium:
         )
         if driver_path:
             driver_path = os.path.abspath(os.path.expanduser(driver_path))
-        
+
         driver_path = driver_path or driverpath
 
         self.driver: T_WebDriver = self.create_driver(
