@@ -83,7 +83,10 @@ class SetupSelenium:
         enable_log_console: bool = False,
         enable_log_driver: bool = False,
         log_path: str = "./logs",
+        driver_path: str | None = None,
         driver_version: str | None = None,
+        browser_version: str | None = None,
+        browser_path: str | None = None,
     ) -> None:
         log_path = os.path.abspath(os.path.expanduser(log_path))
         self.main_window_handle: str = ""
@@ -91,8 +94,17 @@ class SetupSelenium:
         self.log_path: str = log_path
         self.timeout: int = timeout
         self.baseurl: str = baseurl
-
-        driver_path, binary_path = SetupSelenium.install_driver(browser, driver_version)
+        
+        driverpath, binary_path = SetupSelenium.install_driver(
+            browser=browser,
+            driver_version=driver_version,
+            browser_version=browser_version,
+            browser_path=browser_path,
+        )
+        if driver_path:
+            driver_path = os.path.abspath(os.path.expanduser(driver_path))
+        
+        driver_path = driver_path or driverpath
 
         self.driver: T_WebDriver = self.create_driver(
             browser=browser,
@@ -141,22 +153,31 @@ class SetupSelenium:
     @staticmethod
     def install_driver(
         browser: str,
-        version: str | None = None,
+        driver_version: str | None = None,
+        browser_version: str | None = None,
+        browser_path: str | None = None,
         install_browser: bool = False,
     ) -> tuple[str, str]:
         """install the webdriver and browser if needed."""
         browser = Browser[browser.upper()].lower()
-        version = version or None
+        driver_version = driver_version or None
 
         sm = SeleniumManager()
         args = [f"{sm.get_binary()}", "--browser", browser]
 
-        if version:
+        if browser_version:
+            args.append("--browser-version")
+            args.append(browser_version)
+        elif driver_version:
             args.append("--driver-version")
-            args.append(version)
+            args.append(driver_version)
 
-        if install_browser:
+        if install_browser or browser_version:
             args.append("--force-browser-download")
+        if browser_path:
+            browser_path = os.path.abspath(os.path.expanduser(browser_path))
+            args.append("--browser-path")
+            args.append(browser_path)
 
         output = sm.run(args)
         driver_path = output["driver_path"]
