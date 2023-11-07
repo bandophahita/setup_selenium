@@ -38,7 +38,12 @@ jobs:
           firefox-version: latest
       
       - name: remove native drivers
-        run: rmdir /s C:\SeleniumWebDrivers
+        run: rmdir SeleniumWebDrivers /s
+
+
+
+
+
 
 
 
