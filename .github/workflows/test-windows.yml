@@ -37,6 +37,12 @@ jobs:
         with:
           firefox-version: latest
       
+      - name: remove native drivers
+        run: rd C:\SeleniumWebDrivers -Force -Recurse
+
+
+
+
 
 
 
@@ -57,4 +63,4 @@ jobs:
           pip install tox tox-gh-actions
 
       - name: Test with tox
-        run: tox -- --runslow
+        run: tox

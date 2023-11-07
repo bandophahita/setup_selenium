@@ -36,7 +36,13 @@ jobs:
         uses: browser-actions/setup-firefox@v1
         with:
           firefox-version: latest
-      
+
+      - name: remove native drivers
+        run: |
+          rm /usr/local/bin/chromedriver
+          rm /usr/local/bin/geckodriver
+          rm /usr/local/bin/msedgedriver
+
 
 
 
@@ -57,4 +63,4 @@ jobs:
           pip install tox tox-gh-actions
 
       - name: Test with tox
-        run: tox -- --runslow
+        run: tox
