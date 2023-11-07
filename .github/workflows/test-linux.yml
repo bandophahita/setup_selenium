@@ -42,6 +42,12 @@ jobs:
         with:
           edge-version: stable
 
+      - name: remove native drivers
+        run: |
+          rm /usr/bin/chromedriver
+          rm /usr/bin/geckodriver
+          rm /usr/bin/msedgedriver
+
 ################################################################################
 # SETUP TEST 
       - uses: actions/checkout@v3
