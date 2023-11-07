@@ -38,7 +38,7 @@ jobs:
           firefox-version: latest
       
       - name: remove native drivers
-        run: rd SeleniumWebDrivers -Force -Recurse
+        run: rd C:\SeleniumWebDrivers -Force -Recurse
 
 
 
