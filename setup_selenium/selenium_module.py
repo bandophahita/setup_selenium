@@ -95,14 +95,18 @@ class SetupSelenium:
         self.timeout: int = timeout
         self.baseurl: str = baseurl
 
-        driverpath, binary_path = SetupSelenium.install_driver(
+        if driver_path:
+            driver_path = os.path.abspath(os.path.expanduser(driver_path))
+
+        if browser_path:
+            browser_path = os.path.abspath(os.path.expanduser(browser_path))
+
+        driverpath, binarypath = SetupSelenium.install_driver(
             browser=browser,
             driver_version=driver_version,
             browser_version=browser_version,
             browser_path=browser_path,
         )
-        if driver_path:
-            driver_path = os.path.abspath(os.path.expanduser(driver_path))
 
         driver_path = driver_path or driverpath
 
@@ -113,7 +117,7 @@ class SetupSelenium:
             enable_log_console=enable_log_console,
             enable_log_driver=enable_log_driver,
             log_dir=log_path,
-            binary=binary_path,
+            binary=binarypath,
             driver_path=driver_path,
         )
 
