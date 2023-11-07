@@ -26,6 +26,28 @@ def test_install_chrome() -> None:
     assert path2 != path4
 
 
+def test_install_chrome_path() -> None:
+    path1, path2 = SetupSelenium.install_driver(Browser.CHROME, install_browser=False)
+    path3, path4 = SetupSelenium.install_driver(Browser.CHROME, browser_path=path2)
+    assert path2 == path4
+
+
+def test_install_chrome_driver_version() -> None:
+    path1, path2 = SetupSelenium.install_driver(
+        Browser.CHROME, driver_version="116.0.5845.96", install_browser=False
+    )
+
+    assert "116.0.5845.96" in path1
+
+
+def test_install_chrome_browser_version() -> None:
+    path1, path2 = SetupSelenium.install_driver(
+        Browser.CHROME, browser_version="118.0.5993.70"
+    )
+
+    assert "118.0.5993.70" in path2
+
+
 def test_install_firefox() -> None:
     path1, path2 = SetupSelenium.install_driver(Browser.FIREFOX, install_browser=False)
     path3, path4 = SetupSelenium.install_driver(Browser.FIREFOX, install_browser=True)
@@ -36,7 +58,28 @@ def test_install_firefox() -> None:
     assert path2 != path4
 
 
-@pytest.mark.slow
+def test_install_firefox_path() -> None:
+    path1, path2 = SetupSelenium.install_driver(Browser.FIREFOX, install_browser=False)
+    path3, path4 = SetupSelenium.install_driver(Browser.FIREFOX, browser_path=path2)
+    assert path2 == path4
+
+
+def test_install_firefox_driver_version() -> None:
+    path1, path2 = SetupSelenium.install_driver(
+        Browser.FIREFOX, driver_version="0.31.0", install_browser=False
+    )
+
+    assert "0.31.0" in path1
+
+
+def test_install_firefox_browser_version() -> None:
+    path1, path2 = SetupSelenium.install_driver(
+        Browser.FIREFOX, browser_version="118.0.2"
+    )
+
+    assert "118.0.2" in path2
+
+
 def test_install_edge() -> None:
     path1, path2 = SetupSelenium.install_driver(Browser.EDGE, install_browser=False)
     path3, path4 = SetupSelenium.install_driver(Browser.EDGE, install_browser=True)
@@ -47,11 +90,45 @@ def test_install_edge() -> None:
     assert path2 != path4
 
 
+def test_install_edge_path() -> None:
+    path1, path2 = SetupSelenium.install_driver(Browser.EDGE, install_browser=False)
+    path3, path4 = SetupSelenium.install_driver(Browser.EDGE, browser_path=path2)
+    assert path2 == path4
+
+
+def test_install_edge_driver_version() -> None:
+    path1, path2 = SetupSelenium.install_driver(
+        Browser.EDGE, driver_version="118.0.2088.57", install_browser=False
+    )
+
+    assert "118.0.2088.57" in path1
+
+
+def test_install_edge_browser_version() -> None:
+    path1, path2 = SetupSelenium.install_driver(
+        Browser.EDGE, browser_version="118.0.2088.57"
+    )
+
+    assert "118.0.2088.57" in path2
+
+
 def test_can_be_instantiated() -> None:
     s = SetupSelenium(headless=True)
     assert isinstance(s, SetupSelenium)
     assert isinstance(s.driver, webdriver.Firefox | webdriver.Chrome | webdriver.Edge)
     assert s.driver.service.is_connectable()
+
+
+def test_accepts_paths() -> None:
+    path1, path2 = SetupSelenium.install_driver(
+        Browser.CHROME, browser_version="116.0.5845.96"
+    )
+    s = SetupSelenium(headless=True, driver_path=path1, browser_path=path2)
+    assert isinstance(s, SetupSelenium)
+    assert isinstance(s.driver, webdriver.Chrome)
+    assert s.driver.service.is_connectable()
+    assert s.driver.service.path == path1
+    assert s.driver.capabilities["browserVersion"] == "116.0.5845.96"
 
 
 def test_chrome_service(create_logger: logging.Logger) -> None:
@@ -112,7 +189,6 @@ def test_firefox_bad_binary_path(create_logger: logging.Logger) -> None:
     assert driver.service.is_connectable()
 
 
-@pytest.mark.slow
 def test_edge_bad_binary_path(create_logger: logging.Logger) -> None:
     set_logger(create_logger)
     driver = SetupSelenium.create_driver(
