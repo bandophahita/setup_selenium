@@ -281,11 +281,11 @@ class SetupSelenium:
         if driver_path:
             service = FirefoxService(
                 executable_path=driver_path,
-                log_path=logpath,
+                log_output=logpath,
             )
         else:
             service = FirefoxService(
-                log_path=logpath,
+                log_output=logpath,
             )
 
         driver = webdriver.Firefox(service=service, options=options)
@@ -373,12 +373,12 @@ class SetupSelenium:
             service = ChromeService(
                 executable_path=driver_path,
                 service_args=args,
-                log_path=logpath,
+                log_output=logpath,
             )
         else:
             service = ChromeService(
                 service_args=args,
-                log_path=logpath,
+                log_output=logpath,
             )
 
         driver = webdriver.Chrome(service=service, options=options)
@@ -506,12 +506,12 @@ class SetupSelenium:
             service = EdgeService(
                 executable_path=driver_path,
                 service_args=args,
-                log_path=logpath,
+                log_output=logpath,
             )
         else:
             service = EdgeService(
                 service_args=args,
-                log_path=logpath,
+                log_output=logpath,
             )
         driver = webdriver.Edge(service=service, options=options)
 
