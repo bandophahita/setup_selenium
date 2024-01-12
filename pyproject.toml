@@ -161,6 +161,9 @@ ignore = [
     "PLR0915", # too-many-statements
     "PLR2004", # magic-value-comparison
 
+    # 3.8 & 3.9 compatibility
+    "UP035", # Import from `typing` instead: `TypeAlias`
+    "UP038", # Use `X | Y` in `isinstance` call instead of `(X, Y)`
 ]
 
 # Same as Black.
