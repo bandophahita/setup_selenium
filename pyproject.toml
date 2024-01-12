@@ -9,6 +9,8 @@ authors = ["Marcel Wilson <trenchrats@gmail.com>"]
 python = "^3.8"
 selenium = ">=4.7.0"
 semantic-version = "*"
+typing-extensions = "^4.7.1"
+
 # extras
 pytest = {version="*", optional = true}
 coverage = {version="*", optional = true}

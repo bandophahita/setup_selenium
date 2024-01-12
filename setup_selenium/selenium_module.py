@@ -4,7 +4,7 @@ import errno
 import logging
 import os as os
 from enum import Enum
-from typing import TYPE_CHECKING, TypeAlias
+from typing import TYPE_CHECKING
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchWindowException, WebDriverException
@@ -13,6 +13,7 @@ from selenium.webdriver.common.selenium_manager import SeleniumManager
 from selenium.webdriver.edge.service import Service as EdgeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from semantic_version import Version  # type: ignore
+from typing_extensions import TypeAlias
 
 if TYPE_CHECKING:
     from collections.abc import Mapping

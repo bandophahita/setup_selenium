@@ -115,7 +115,7 @@ def test_install_edge_browser_version() -> None:
 def test_can_be_instantiated() -> None:
     s = SetupSelenium(headless=True)
     assert isinstance(s, SetupSelenium)
-    assert isinstance(s.driver, webdriver.Firefox | webdriver.Chrome | webdriver.Edge)
+    assert isinstance(s.driver, (webdriver.Firefox, webdriver.Chrome, webdriver.Edge))
     assert s.driver.service.is_connectable()
 
 
