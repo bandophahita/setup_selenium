@@ -4,7 +4,7 @@ import errno
 import logging
 import os as os
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchWindowException, WebDriverException
@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from selenium.webdriver import Chrome, Edge, Firefox
     from selenium.webdriver.common.options import ArgOptions
 
-    T_WebDriver: TypeAlias = Firefox | Chrome | Edge
+    T_WebDriver: TypeAlias = Union[Firefox, Chrome, Edge]
 
 __all__ = ["SetupSelenium"]
 
