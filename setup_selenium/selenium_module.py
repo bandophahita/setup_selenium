@@ -272,7 +272,7 @@ class SetupSelenium:
         # setting logpath to /dev/null will prevent geckodriver from creating it's own
         # log file. if we enable root logging, we can capture the logging from
         # geckodriver, ourselves.
-        logpath = "/dev/null"
+        logpath = os.path.devnull
         options.log.level = "fatal"  # type: ignore[assignment]
         if enable_log_driver:
             lp = os.path.abspath(os.path.expanduser(log_dir))
