@@ -6,7 +6,7 @@ authors = ["Marcel Wilson <trenchrats@gmail.com>"]
 
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.8"
 selenium = ">=4.7.0"
 semantic-version = "*"
 # extras
