@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "setup-selenium-testing"
-version = "0.1.1"
+version = "0.1.2"
 description = "Setup Selenium for automation testing"
 authors = ["Marcel Wilson <trenchrats@gmail.com>"]
 license = "MIT"
@@ -25,30 +25,23 @@ packages = [{include = "setup_selenium"}]
 python = "^3.8"
 selenium = ">=4.7.0"
 semantic-version = "*"
-typing-extensions = "^4.7.1"
+typing-extensions = "*"
 
 # extras
 pytest = {version="*", optional = true}
-coverage = {version="*", optional = true}
-flake8 = {version="*", optional = true}
 black = {version="*", optional = true}
 mypy = {version="*", optional = true}
-pylint = {version="*", optional = true}
-setuptools = {version="*", optional = true}
 ruff = {version="*", optional = true}
 tox = {version="*", optional = true}
-
+isort = {version = "*", optional = true}
 
 [tool.poetry.extras]
 dev = [
     "pytest",
-    "coverage",
-    "flake8",
     "black",
     "mypy",
-    "pylint",
-    "setuptools",
     "ruff",
+    "isort",
     "tox",
 ]
 test = [
