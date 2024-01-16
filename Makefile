@@ -35,7 +35,10 @@ mypy:
 
 lint: isort-check ruff mypy
 
-.PHONY: black-check black isort-check isort ruff ruff-fix mypy lint 
+test:
+	python3 -m pytest tests
+
+.PHONY: black-check black isort-check isort ruff ruff-fix mypy lint test 
 
 pre-check-in: black-check lint
 
