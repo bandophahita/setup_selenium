@@ -18,6 +18,7 @@ classifiers = [
     "Intended Audience :: Developers",
     "Natural Language :: English",
 ]
+packages = {include = "setup_selenium"}
 
 
 [tool.poetry.dependencies]
