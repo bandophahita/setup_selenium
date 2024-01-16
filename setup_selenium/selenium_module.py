@@ -1,3 +1,4 @@
+"""Setup selenium for testing"""
 from __future__ import annotations
 
 import errno
@@ -12,7 +13,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.selenium_manager import SeleniumManager
 from selenium.webdriver.edge.service import Service as EdgeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
-from semantic_version import Version  # type: ignore
+from semantic_version import Version  # type: ignore[import-untyped]
 from typing_extensions import TypeAlias
 
 if TYPE_CHECKING:
@@ -38,12 +39,11 @@ logger = create_logger("sel")
 
 
 def set_logger(logr: logging.Logger) -> None:
-    """
-    Set the global logger with a custom logger
-    """
+    """Set the global logger with a custom logger"""
     # Check if the logger is a valid logger
     if not isinstance(logr, logging.Logger):
-        raise ValueError("The logger must be an instance of logging.Logger")
+        msg = "logger must be an instance of logging.Logger"
+        raise TypeError(msg)
 
     # Bind the logger input to the global logger
     global logger  # noqa: PLW0603
@@ -132,9 +132,7 @@ class SetupSelenium:
     def make_screenshot_path(
         output_dir: str = "./logs", screenshots: str = "screenshots"
     ) -> str:
-        """
-        Set the output directory for where screenshots should go.
-        """
+        """Set the output directory for where screenshots should go."""
         output_dir = os.path.abspath(os.path.expanduser(output_dir))
         if os.path.split(output_dir)[-1].lower() != screenshots:
             output_dir = os.path.join(output_dir, screenshots)
@@ -152,6 +150,7 @@ class SetupSelenium:
     ############################################################################
     @staticmethod
     def log_options(options: ArgOptions) -> None:
+        """Logs the browser option in clean format"""
         opts = "\n".join(options.arguments)
         logger.debug(f"{opts}")
 
@@ -163,7 +162,7 @@ class SetupSelenium:
         browser_path: str | None = None,
         install_browser: bool = False,
     ) -> tuple[str, str]:
-        """install the webdriver and browser if needed."""
+        """Install the webdriver and browser if needed."""
         browser = Browser[browser.upper()].lower()
         driver_version = driver_version or None
 
@@ -204,6 +203,7 @@ class SetupSelenium:
         binary: str | None = None,
         driver_path: str | None = None,
     ) -> T_WebDriver:
+        """Instantiates the browser driver"""
         browser = browser.lower()
         driver: T_WebDriver
         if browser == Browser.FIREFOX:
@@ -238,12 +238,14 @@ class SetupSelenium:
             )
 
         else:
-            raise ValueError(f"Unknown browser: {browser}")
+            msg = f"Unknown browser: {browser}"
+            raise ValueError(msg)
 
         return driver
 
     @staticmethod
     def firefox_options() -> webdriver.FirefoxOptions:
+        """Default options for firefox"""
         options = webdriver.FirefoxOptions()
         options.set_capability("unhandledPromptBehavior", "ignore")
 
@@ -263,6 +265,7 @@ class SetupSelenium:
         binary: str | None = None,
         options: webdriver.FirefoxOptions = None,
     ) -> webdriver.Firefox:
+        """Instantiates firefox geockodriver"""
         options = options or SetupSelenium.firefox_options()
         if binary:
             options.binary_location = binary
@@ -301,6 +304,7 @@ class SetupSelenium:
 
     @staticmethod
     def chrome_options() -> webdriver.ChromeOptions:
+        """Default options for chrome"""
         logger.debug("Setting up chrome options")
         # The list of options set below mostly came from this StackOverflow post
         # https://stackoverflow.com/q/48450594/2532408
@@ -334,6 +338,7 @@ class SetupSelenium:
         binary: str | None = None,
         options: webdriver.ChromeOptions = None,
     ) -> webdriver.Chrome:
+        """Instantiates chromedriver"""
         options = options or SetupSelenium.chrome_options()
         if binary:
             options.binary_location = binary
@@ -405,6 +410,7 @@ class SetupSelenium:
 
     @staticmethod
     def set_throttle(driver: webdriver.Chrome):
+        """Experimental settings to slow down browser"""
         # experimental settings to slow down browser
         # @formatter:off
         # fmt: off
@@ -433,6 +439,7 @@ class SetupSelenium:
 
     @staticmethod
     def edge_options() -> webdriver.EdgeOptions:
+        """Default options for edgedriver"""
         logger.debug("Setting up edge options")
         # The list of options set below mostly came from this StackOverflow post
         # https://stackoverflow.com/q/48450594/2532408
@@ -447,8 +454,6 @@ class SetupSelenium:
             # edgedriver crashes without these two in linux
             "--no-sandbox",
             "--disable-dev-shm-usage",
-            # it's possible we no longer need to do these
-            # "--disable-gpu",  # https://stackoverflow.com/q/51959986/2532408
         )
         options = webdriver.EdgeOptions()
         for opt in opts:
@@ -466,6 +471,7 @@ class SetupSelenium:
         binary: str | None = None,
         options: webdriver.EdgeOptions = None,
     ) -> webdriver.Edge:
+        """Instantiates edgedriver"""
         options = options or SetupSelenium.edge_options()
         if binary:
             options.binary_location = binary
@@ -540,6 +546,7 @@ class SetupSelenium:
 
     ############################################################################
     def set_window_size(self, size: str = "720") -> None:
+        """Helper to set the window size after driver has been instantiated."""
         if size == "max":
             self.driver.maximize_window()
             return
@@ -550,17 +557,22 @@ class SetupSelenium:
         self.driver.set_window_size(width, height)
 
     def set_main_window_handle(self, window: str | None = None) -> str:
-        if not window:
-            # does the main_window_handle exist and point to an available window?
-            if not self.main_window_handle:
+        """
+        maintains the initial window handle as an attribute
+
+        Most users will never utilize this. It's part of a legacy requirement for
+        an old test suite
+        """
+        # does the main_window_handle exist and point to an available window?
+        if not window and not self.main_window_handle:
+            try:
+                window = self.driver.current_window_handle
+            except NoSuchWindowException:
                 try:
-                    window = self.driver.current_window_handle
-                except NoSuchWindowException:
-                    try:
-                        window = self.driver.window_handles[0]
-                    except WebDriverException:
-                        # Have we closed all the windows?
-                        raise
+                    window = self.driver.window_handles[0]
+                except WebDriverException:  # noqa: TRY302
+                    # Have we closed all the windows?
+                    raise
         if window:
             self.main_window_handle = window
         return self.main_window_handle

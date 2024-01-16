@@ -88,72 +88,68 @@ build-backend = "poetry.core.masonry.api"
 # Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
 # McCabe complexity (`C901`) by default.
 select = [
-    "E",  # pycodestyle error
-    "W",  # pycodestyle warning
-    "F",  # Pyflakes
-    "FA", # flake8-future-annotations
-    "I",  # isort
-    "D",  # pydocstyle
+    "A",  # flake8-builtins
+    "ANN",  # flake8-annotations  # coming back to this one later to compare against mypy
+    "ARG",  # flake8-unused-arguments
+    "B",  # flake8-bugbear
+    "BLE",  # flake8-blind-except
     "C4",  # flake8-comprehensions
-    "TCH",  # type checking
-    "RUF",  # ruff specific
-    "ANN",  # annotations
-    "UP",  # python upgrade
-    "B",  # bugbear
-    "SIM", # flake8 simplify
-    "A",  # built-ins
-    "RET", # flake8 return
-    "YTT", # flake8-2020
-    "EXE", # flake8-executable
-    "ISC", # flake8-implicit-str-concat
-    "PIE", # flake8-pie
+    "D",  # pydocstyle
+    "E",  # pycodestyle error
+    "EM",  # flake8-errmsg
+    "ERA",  # eradicate
+    "F",  # Pyflakes
+    "FA",  # flake8-future-annotations
+#    "FBT",  # flake8-boolean-trap
+    "FIX",  # flake8-fixme
+    "FLY",  # flynt
+    "I",  # isort
+    "ICN",  # flake8-import-conventions
+    "ISC",  # flake8-implicit-str-concat
+    "PGH",  # pygrep-hooks
+    "PIE",  # flake8-pie
+    "PL",  # pylint
+    "PT",  # flake8-pytest-style
     "Q",  # flake8-quotes
-    "RSE", # flake8-raise
-    "FLY", # flynt
-    "PERF", # perflint
-    "PL", # pylint
-#    "ERA", # eradicate
-    #    "N", # pep8 naming -- dear lord, leave this off
+    "RET",  # flake8-return
+    "RSE",  # flake8-raise
+    "RUF",  # ruff specific
+    "SIM",  # flake8-simplify
+    "T10",  # flake8-debugger
+    "TCH",  # flake8-type-checking
+    "TD",  #TODOs
+    "TRY",  # tryceratops
+    "UP",  # python upgrade
+    "W",  # pycodestyle warning
+    "YTT",  # flake8-2020
 
     # may eventually use but for now these are not helpful
-    #    "FURB", # refurb
-    #    "ARG",  # unused arguments
-    #    "PT",  # Pytest style
-    #    "TD",  #TODOs
-    #    "FBT",  # boolean trap
+#    "FURB", # refurb  # needs --preview flag to run
 ]
 ignore = [
-    #    "PT003",  # pytest fixture scope implied
-    #    "PT004",  # pytest fixture setup doesn't return anything
-    "RUF100",  # blanket noqa
     "ANN101",  # missing-type-self
     "ANN102",  # cls 
     "E501",   # line too long -- black will take care of this for us
-    "E721", # type-comparison WTF? 
-    "B028", # No explicit `stacklevel` keyword argument found
-    "SIM102", # single if instead of nested -- only sometimes useful
-    "SIM114", # combine if branches using logical OR -- only sometimes useful
     "SIM115", # use context handler for open -- situationally useful
-    "SIM118", # use x in y instead of y.keys() - sometimes we want the keys 
-    "SIM300", # yoda conditions -- meh
+#    "SIM300", # yoda conditions -- meh
 
     "PERF203", # `try`-`except` within a loop incurs performance overhead
     "PERF401", # use list comp
 
     # NOT OPTIONAL. MUST REMAIN AS SET
     # these are all completely unnecessary 
-    "D100", # Missing docstring in public module
     "D101", # Missing docstring in public class
-    "D102", # Missing docstring in public method
-    "D103", # Missing docstring in public function
     "D104", # Missing docstring in public package
     "D105", # Missing docstring in magic method
     "D106", # Missing docstring in public nested class
     "D107", # Missing docstring in `__init__`
-    "D301", # Use `r"""` if any backslashes in a docstring
+    "D202", # no blank lines after docstring
+    "D203", # one-blank-line-before-class
+    "D204", # blank line required after docstring
+    "D205", # blank line between summary and description
+    "D212", # Multi-line summary should start at the first line
     "D400", # First line should end with a period
     "D401", # imperative mood
-    "D403", # first word of 1st line caps
     "D404", # First word of the docstring should not be "This"
     "D405", # Section name should be properly capitalized
     "D406", # Section name should end with a newline 
@@ -161,21 +157,12 @@ ignore = [
     "D411", # Missing blank line before section
     "D412", # No blank lines allowed between a section header and its content 
     "D415", # First line should end with punctuation
-    "D200", # One-line docstring should fit on one line
-    "D202", # no blank lines after docstring
-    "D204", # blank line required after docstring
-    "D205", # blank line between summary and description
-    "D203", # one-blank-line-before-class
-    "D210", # whitespace
-    "D212", # Multi-line summary should start at the first line
-    "D214", # Section overindented
-    "A003", # Class attribute shadow builtin
+
     "PLC0414", # useless-import-alias
     "PLR0911", # too-many-return-statements
     "PLR0912", # too-many-branches
     "PLR0913", # too-many-arguments
     "PLR0915", # too-many-statements
-    "PLR2004", # magic-value-comparison
 
     # 3.8 & 3.9 compatibility
     "UP007", # Use `X | Y` for type annotations
@@ -215,11 +202,25 @@ exclude = [
 ]
 
 [tool.ruff.lint]
-extend-safe-fixes = ["TCH003"]
+extend-safe-fixes = [
+    "EM101",
+    "EM102",
+    "TCH001", "TCH002", "TCH003", "TCH004",
+    #    "SIM108"
+    "C419",
+    "D200", "D205",
+    "PT003", "PT006", "PT018",
+    "RET504",
+    "UP007",
+]
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401"]
-
+"tests/**" = [
+    "D",  # we don't need public-API-polished docstrings in tests.
+    "FBT",  # using a boolean as a test object is useful!
+    "PLR",  # likewise using specific numbers and strings in tests.
+]
 
 [tool.ruff.isort]
 combine-as-imports = true
@@ -234,19 +235,16 @@ mark-parentheses = false
 ignore-overlong-task-comments = true
 
 
-#[tool.ruff.flake8-annotations]
-#mypy-init-return = true
-
-
 [tool.ruff.flake8-annotations]
 # ignore returns types for functions that implicity or explicitly only return None
 suppress-none-returning = true
 allow-star-arg-any = true
+#mypy-init-return = true
 
 
 [tool.black]
 line-length = 88
-target-version = ['py310']
+target-version = ['py311']
 
 # 'extend-exclude' excludes files or directories in addition to the defaults
 extend-exclude = '''

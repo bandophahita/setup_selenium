@@ -197,7 +197,7 @@ def test_edge_bad_binary_path(create_logger: logging.Logger) -> None:
     assert driver.service.is_connectable()
 
 
-@pytest.fixture
+@pytest.fixture()
 def create_logger() -> logging.Logger:
     """Create a logger."""
     logr = logging.getLogger("testsetupsel")
