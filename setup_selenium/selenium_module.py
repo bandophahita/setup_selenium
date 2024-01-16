@@ -263,7 +263,7 @@ class SetupSelenium:
         log_dir: str = "./logs",
         driver_path: str | None = None,
         binary: str | None = None,
-        options: webdriver.FirefoxOptions = None,
+        options: webdriver.FirefoxOptions | None = None,
     ) -> webdriver.Firefox:
         """Instantiates firefox geockodriver"""
         options = options or SetupSelenium.firefox_options()
@@ -336,7 +336,7 @@ class SetupSelenium:
         log_dir: str = "./logs",
         driver_path: str | None = None,
         binary: str | None = None,
-        options: webdriver.ChromeOptions = None,
+        options: webdriver.ChromeOptions | None = None,
     ) -> webdriver.Chrome:
         """Instantiates chromedriver"""
         options = options or SetupSelenium.chrome_options()
@@ -379,12 +379,12 @@ class SetupSelenium:
             service = ChromeService(
                 executable_path=driver_path,
                 service_args=args,
-                log_output=logpath,
+                log_output=logpath,  # type: ignore[arg-type]
             )
         else:
             service = ChromeService(
                 service_args=args,
-                log_output=logpath,
+                log_output=logpath,  # type: ignore[arg-type]
             )
 
         driver = webdriver.Chrome(service=service, options=options)
@@ -469,7 +469,7 @@ class SetupSelenium:
         log_dir: str = "./logs",
         driver_path: str | None = None,
         binary: str | None = None,
-        options: webdriver.EdgeOptions = None,
+        options: webdriver.EdgeOptions | None = None,
     ) -> webdriver.Edge:
         """Instantiates edgedriver"""
         options = options or SetupSelenium.edge_options()
@@ -513,12 +513,12 @@ class SetupSelenium:
             service = EdgeService(
                 executable_path=driver_path,
                 service_args=args,
-                log_output=logpath,
+                log_output=logpath,  # type: ignore[arg-type]
             )
         else:
             service = EdgeService(
                 service_args=args,
-                log_output=logpath,
+                log_output=logpath,  # type: ignore[arg-type]
             )
         driver = webdriver.Edge(service=service, options=options)
 
