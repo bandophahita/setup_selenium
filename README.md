@@ -1,6 +1,21 @@
-# setup_selenium
+# setup-selenium-testing
 I get tired of having to rewrite the setup logic for selenium drivers 
 in every project.  Time to consolidate.
+
+[![License](https://img.shields.io/badge/license-MPL%202.0-blue.svg)](https://github.com/bandophahita/selenium-axe-python/blob/master/LICENSE.txt)
+[![PyPI](https://img.shields.io/pypi/v/setup-selenium-testing.svg)](https://pypi.org/project/setup-selenium-testing/)
+[![Supported Versions](https://img.shields.io/pypi/pyversions/setup-selenium-testing.svg)](https://pypi.org/project/setup-selenium-testing)
+[![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+
+[![Issues](https://img.shields.io/github/issues-raw/bandophahita/setup_selenium.svg)](https://github.com/bandophahita/setup_selenium/issues)
+
+[![Build Status](https://github.com/bandophahita/setup_selenium/actions/workflows/test-linux.yml/badge.svg)](https://github.com/bandophahita/setup_selenium/actions/workflows/test-linux.yml)
+[![Build Status](https://github.com/bandophahita/setup_selenium/actions/workflows/test-mac-m1.yml/badge.svg)](https://github.com/bandophahita/setup_selenium/actions/workflows/test-mac-m1.yml)
+[![Build Status](https://github.com/bandophahita/setup_selenium/actions/workflows/test-windows.yml/badge.svg)](https://github.com/bandophahita/setup_selenium/actions/workflows/test-windows.yml)
+[![Build Status](https://github.com/bandophahita/setup_selenium/actions/workflows/lint.yml/badge.svg)](https://github.com/bandophahita/setup_selenium/actions/workflows/lint.yml)
 
 
 # Basic usage
