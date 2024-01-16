@@ -2,7 +2,7 @@
 I get tired of having to rewrite the setup logic for selenium drivers 
 in every project.  Time to consolidate.
 
-[![License](https://img.shields.io/badge/license-MPL%202.0-blue.svg)](https://github.com/bandophahita/selenium-axe-python/blob/master/LICENSE.txt)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bandophahita/setup_selenium/blob/master/LICENSE.txt)
 [![PyPI](https://img.shields.io/pypi/v/setup-selenium-testing.svg)](https://pypi.org/project/setup-selenium-testing/)
 [![Supported Versions](https://img.shields.io/pypi/pyversions/setup-selenium-testing.svg)](https://pypi.org/project/setup-selenium-testing)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
