@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "setup_selenium"
+name = "setup-selenium-testing"
 version = "0.1.0"
 description = "Setup Selenium for automation testing"
 authors = ["Marcel Wilson <trenchrats@gmail.com>"]
