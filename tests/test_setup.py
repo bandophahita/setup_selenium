@@ -197,6 +197,24 @@ def test_edge_bad_binary_path(create_logger: logging.Logger) -> None:
     assert driver.service.is_connectable()
 
 
+def test_create_firefox_wrong_options() -> None:
+    with pytest.raises(AssertionError):
+        SetupSelenium.create_driver(
+            Browser.FIREFOX, options=SetupSelenium.chrome_options()
+        )
+
+def test_create_chrome_wrong_options() -> None:
+    with pytest.raises(AssertionError):
+        SetupSelenium.create_driver(
+            Browser.CHROME, options=SetupSelenium.edge_options()
+        )
+        
+def test_create_edge_wrong_options() -> None:
+    with pytest.raises(AssertionError):
+        SetupSelenium.create_driver(
+            Browser.EDGE, options=SetupSelenium.firefox_options()
+        )
+
 @pytest.fixture()
 def create_logger() -> logging.Logger:
     """Create a logger."""

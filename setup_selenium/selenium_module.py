@@ -5,7 +5,7 @@ import errno
 import logging
 import os as os
 from enum import Enum
-from typing import TYPE_CHECKING, Union
+from typing import TYPE_CHECKING, Union, Optional
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchWindowException, WebDriverException
@@ -23,6 +23,9 @@ if TYPE_CHECKING:
     from selenium.webdriver.common.options import ArgOptions
 
     T_WebDriver: TypeAlias = Union[Firefox, Chrome, Edge]
+    T_DrvOpts: TypeAlias = Union[
+        webdriver.FirefoxOptions, webdriver.ChromeOptions, webdriver.EdgeOptions
+    ]
 
 __all__ = ["SetupSelenium"]
 
@@ -202,20 +205,24 @@ class SetupSelenium:
         log_dir: str = "./logs",
         binary: str | None = None,
         driver_path: str | None = None,
+        options: Optional[T_DrvOpts] = None,
     ) -> T_WebDriver:
         """Instantiates the browser driver"""
         browser = browser.lower()
         driver: T_WebDriver
         if browser == Browser.FIREFOX:
+            assert options is None or isinstance(options, webdriver.FirefoxOptions)
             driver = SetupSelenium.firefox(
                 headless=headless,
                 enable_log_driver=enable_log_driver,
                 log_dir=log_dir,
                 binary=binary,
                 driver_path=driver_path,
+                options=options,
             )
 
         elif browser == Browser.CHROME:
+            assert options is None or isinstance(options, webdriver.ChromeOptions)
             driver = SetupSelenium.chrome(
                 headless=headless,
                 enable_log_performance=enable_log_performance,
@@ -224,9 +231,11 @@ class SetupSelenium:
                 log_dir=log_dir,
                 binary=binary,
                 driver_path=driver_path,
+                options=options,
             )
 
         elif browser == Browser.EDGE:
+            assert options is None or isinstance(options, webdriver.EdgeOptions)
             driver = SetupSelenium.edge(
                 headless=headless,
                 enable_log_performance=enable_log_performance,
@@ -235,6 +244,7 @@ class SetupSelenium:
                 log_dir=log_dir,
                 binary=binary,
                 driver_path=driver_path,
+                options=options,
             )
 
         else:
