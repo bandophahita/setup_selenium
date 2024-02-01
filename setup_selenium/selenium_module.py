@@ -1,11 +1,12 @@
 """Setup selenium for testing"""
+
 from __future__ import annotations
 
 import errno
 import logging
 import os as os
 from enum import Enum
-from typing import TYPE_CHECKING, Union, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchWindowException, WebDriverException
