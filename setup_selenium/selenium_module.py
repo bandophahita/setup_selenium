@@ -288,10 +288,14 @@ class SetupSelenium:
         # log file. if we enable root logging, we can capture the logging from
         # geckodriver, ourselves.
         logpath = os.path.devnull
-        options.log.level = "fatal"  # type: ignore[assignment]
         if enable_log_driver:
             lp = os.path.abspath(os.path.expanduser(log_dir))
             logpath = os.path.join(lp, "geckodriver.log")
+            if not options.log.level:
+                options.log.level = "trace"  # type: ignore[assignment]
+        
+        if not options.log.level:
+            options.log.level = "fatal"  # type: ignore[assignment]
 
         if driver_path:
             service = FirefoxService(
