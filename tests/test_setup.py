@@ -97,19 +97,19 @@ def test_install_edge_path() -> None:
 
 
 def test_install_edge_driver_version() -> None:
+    version = "118.0.2088.57"
     path1, path2 = SetupSelenium.install_driver(
-        Browser.EDGE, driver_version="118.0.2088.57", install_browser=False
+        Browser.EDGE, driver_version=version, install_browser=False
     )
 
-    assert "118.0.2088.57" in path1
+    assert version in path1
 
 
 def test_install_edge_browser_version() -> None:
-    path1, path2 = SetupSelenium.install_driver(
-        Browser.EDGE, browser_version="118.0.2088.57"
-    )
+    version = "119.0.2151.72"
+    path1, path2 = SetupSelenium.install_driver(Browser.EDGE, browser_version=version)
 
-    assert "118.0.2088.57" in path2
+    assert version in path2
 
 
 def test_can_be_instantiated() -> None:
