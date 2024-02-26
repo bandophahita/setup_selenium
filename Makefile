@@ -15,16 +15,10 @@ update: update_lock_only
 black-check:
 	black --check .
 
-black:
+black-fix:
 	black .
 
-isort-check:
-	isort . --check
-
-isort:
-	isort .
-
-ruff:
+ruff-check:
 	ruff check .
 
 ruff-fix:
@@ -33,15 +27,15 @@ ruff-fix:
 mypy:
 	mypy .
 
-lint: isort-check ruff mypy
+.PHONY: black-check black-fix ruff-check ruff-fix mypy
+
+pre-check-in: black-check ruff-check mypy
+
+pre-check-in-fix: black-fix ruff-fix mypy
+
+.PHONY: pre-check-in pre-check-in-fix
 
 test:
 	python3 -m pytest tests
 
-.PHONY: black-check black isort-check isort ruff ruff-fix mypy lint test 
-
-pre-check-in: black-check lint
-
-pre-check-in-fix: black isort ruff-fix mypy
-
-.PHONY: pre-check-in pre-check-in-fix
+.PHONY: test 
