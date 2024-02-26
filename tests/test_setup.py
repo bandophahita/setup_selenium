@@ -9,7 +9,7 @@ from selenium import webdriver
 from selenium.common import NoSuchDriverException
 
 from setup_selenium import Browser, SetupSelenium, set_logger
-from setup_selenium.selenium_module import logger as original_logger
+from setup_selenium.setup_selenium import logger as original_logger
 
 if TYPE_CHECKING:
     from _pytest.logging import LogCaptureFixture
