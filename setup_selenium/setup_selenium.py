@@ -293,7 +293,7 @@ class SetupSelenium:
             logpath = os.path.join(lp, "geckodriver.log")
             if not options.log.level:
                 options.log.level = "trace"  # type: ignore[assignment]
-        
+
         if not options.log.level:
             options.log.level = "fatal"  # type: ignore[assignment]
 
