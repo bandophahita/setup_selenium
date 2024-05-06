@@ -37,11 +37,9 @@ jobs:
       - name: remove native drivers
         run: |
           rm /usr/local/share/chromedriver-mac-arm64/chromedriver
-          which geckodriver
-          which msedgedriver
-#          rm /usr/local/share/geckodriver
-#          rm /usr/local/share/msedgedriver
       
+      - name: finding drivers
+        run: which geckodriver
 
 
 
