@@ -36,7 +36,7 @@ jobs:
 
       - name: remove native drivers
         run: |
-          rm /usr/local/share/chromedriver-mac-arm64
+          rm /usr/local/share/chromedriver-mac-arm64/chromedriver
           rm /usr/local/share/geckodriver
           rm /usr/local/share/msedgedriver
 #          rm /usr/local/bin/chromedriver
