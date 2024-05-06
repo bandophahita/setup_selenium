@@ -106,7 +106,7 @@ def test_install_edge_driver_version() -> None:
 
 
 def test_install_edge_browser_version() -> None:
-    version = "119.0.2151.72"
+    version = "124.0.2478.80"
     path1, path2 = SetupSelenium.install_driver(Browser.EDGE, browser_version=version)
 
     assert version in path2
