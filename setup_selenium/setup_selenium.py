@@ -8,7 +8,7 @@ import os as os
 from enum import Enum
 from typing import TYPE_CHECKING, Optional, Union
 
-from selenium import webdriver
+from selenium import __version__, webdriver
 from selenium.common.exceptions import NoSuchWindowException, WebDriverException
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.selenium_manager import SeleniumManager
@@ -27,6 +27,11 @@ if TYPE_CHECKING:
     T_DrvOpts: TypeAlias = Union[
         webdriver.FirefoxOptions, webdriver.ChromeOptions, webdriver.EdgeOptions
     ]
+
+NEW_SELENIUM = False
+if Version(__version__) >= Version("4.20.0"):
+    NEW_SELENIUM = True
+
 
 __all__ = ["SetupSelenium"]
 
@@ -171,7 +176,11 @@ class SetupSelenium:
         driver_version = driver_version or None
 
         sm = SeleniumManager()
-        args = [f"{sm.get_binary()}", "--browser", browser]
+
+        if NEW_SELENIUM:
+            args = [f"{sm._get_binary()}", "--browser", browser]
+        else:
+            args = [f"{sm.get_binary()}", "--browser", browser]  # type: ignore[attr-defined]
 
         if browser_version:
             args.append("--browser-version")
@@ -187,7 +196,12 @@ class SetupSelenium:
             args.append("--browser-path")
             args.append(browser_path)
 
-        output = sm.run(args)
+        if NEW_SELENIUM:
+            args.append("--output")
+            args.append("json")
+            output = sm._run(args)
+        else:
+            output = sm.run(args)  # type: ignore[attr-defined]
         driver_path = output["driver_path"]
         browser_path = output["browser_path"]
 
