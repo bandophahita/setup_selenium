@@ -34,6 +34,11 @@ jobs:
         with:
           firefox-version: latest
 
+      - name: setup edge
+        uses: browser-actions/setup-edge@v1
+        with:
+            edge-version: stable
+
       - name: remove native drivers
         run: |
           rm /usr/local/share/chromedriver-mac-arm64/chromedriver
