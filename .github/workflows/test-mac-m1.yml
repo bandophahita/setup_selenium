@@ -14,7 +14,8 @@ permissions:
 jobs:
   run-tests:
     name: Python ${{ matrix.python-version }}
-    runs-on: macos-13-arm64
+#    runs-on: macos-13-arm64
+    runs-on: macos-latest
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     strategy:
@@ -34,15 +35,15 @@ jobs:
         with:
           firefox-version: latest
 
+      - name: install edge
+        run: brew install --cask microsoft-edge
+
+      - name: Verify Edge Installation
+        run: /Applications/Microsoft\ Edge.app/Contents/MacOS/Microsoft\ Edge --version
+
       - name: remove native drivers
         run: |
           rm /usr/local/share/chromedriver-mac-arm64/chromedriver
-
-
-
-
-
-
 
 ################################################################################
 # SETUP TEST 
