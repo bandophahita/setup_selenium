@@ -14,8 +14,7 @@ permissions:
 jobs:
   run-tests:
     name: Python ${{ matrix.python-version }}
-#    runs-on: macos-latest
-    runs-on: macos-13-xlarge
+    runs-on: macos-13-arm64
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     strategy:
