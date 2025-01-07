@@ -174,27 +174,24 @@ def test_create_edge_bad_driver_path() -> None:
 
 
 def test_chrome_bad_binary_path(create_logger: logging.Logger) -> None:
-    set_logger(create_logger)
-    driver = SetupSelenium.create_driver(
-        Browser.CHROME, headless=True, binary="/fake_path/binary"
-    )
-    assert driver.service.is_connectable()
+    with pytest.raises(NoSuchDriverException):
+        SetupSelenium.create_driver(
+            Browser.CHROME, headless=True, binary="/fake_path/binary"
+        )
 
 
 def test_firefox_bad_binary_path(create_logger: logging.Logger) -> None:
-    set_logger(create_logger)
-    driver = SetupSelenium.create_driver(
-        Browser.FIREFOX, headless=True, binary="/fake_path/binary"
-    )
-    assert driver.service.is_connectable()
+    with pytest.raises(NoSuchDriverException):
+        SetupSelenium.create_driver(
+            Browser.FIREFOX, headless=True, binary="/fake_path/binary"
+        )
 
 
 def test_edge_bad_binary_path(create_logger: logging.Logger) -> None:
-    set_logger(create_logger)
-    driver = SetupSelenium.create_driver(
-        Browser.EDGE, headless=True, binary="/fake_path/binary"
-    )
-    assert driver.service.is_connectable()
+    with pytest.raises(NoSuchDriverException):
+        SetupSelenium.create_driver(
+            Browser.EDGE, headless=True, binary="/fake_path/binary"
+        )
 
 
 def test_create_firefox_wrong_options() -> None:
