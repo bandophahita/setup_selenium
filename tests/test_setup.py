@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 from selenium import webdriver
-from selenium.common import NoSuchDriverException
+from selenium.common.exceptions import NoSuchDriverException
 
 from setup_selenium import Browser, SetupSelenium, set_logger
 from setup_selenium.setup_selenium import logger as original_logger
