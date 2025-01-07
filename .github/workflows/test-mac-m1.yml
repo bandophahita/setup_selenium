@@ -1,7 +1,9 @@
 name: MacM1
 
 on:
-#  push:
+  push:
+    tags:
+      - '**'
 #    paths:
 #      - '**.py'
 #      - '**.yml'
