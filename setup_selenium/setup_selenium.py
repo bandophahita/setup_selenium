@@ -594,7 +594,7 @@ class SetupSelenium:
 
     def set_main_window_handle(self, window: str | None = None) -> str:
         """
-        maintains the initial window handle as an attribute
+        Maintains the initial window handle as an attribute
 
         Most users will never utilize this. It's part of a legacy requirement for
         an old test suite
@@ -606,7 +606,7 @@ class SetupSelenium:
             except NoSuchWindowException:
                 try:
                     window = self.driver.window_handles[0]
-                except WebDriverException:  # noqa: TRY302
+                except WebDriverException:  # noqa: TRY203
                     # Have we closed all the windows?
                     raise
         if window:

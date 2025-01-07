@@ -218,7 +218,7 @@ def test_create_edge_wrong_options() -> None:
         )
 
 
-@pytest.fixture()
+@pytest.fixture
 def create_logger() -> logging.Logger:
     """Create a logger."""
     logr = logging.getLogger("testsetupsel")
