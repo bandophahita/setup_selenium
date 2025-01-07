@@ -80,6 +80,7 @@ def test_install_firefox_browser_version() -> None:
     assert "118.0.2" in path2
 
 
+@pytest.mark.xfail(reason="broken until selenium 4.28")
 def test_install_edge() -> None:
     path1, path2 = SetupSelenium.install_driver(Browser.EDGE, install_browser=False)
     path3, path4 = SetupSelenium.install_driver(Browser.EDGE, install_browser=True)
@@ -105,6 +106,7 @@ def test_install_edge_driver_version() -> None:
     assert version in path1
 
 
+@pytest.mark.xfail(reason="broken until selenium 4.28")
 def test_install_edge_browser_version() -> None:
     version = "124.0.2478.80"
     path1, path2 = SetupSelenium.install_driver(Browser.EDGE, browser_version=version)
