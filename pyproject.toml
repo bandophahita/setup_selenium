@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "setup-selenium-testing"
-version = "0.1.6"
+version = "0.1.7"
 description = "Setup Selenium for automation testing"
 authors = ["Marcel Wilson <trenchrats@gmail.com>"]
 license = "MIT"
@@ -94,6 +94,7 @@ extend-exclude = [
     "README.md",
     ".idea",
 ]
+output-format = "concise"
 
 [tool.ruff.lint]
 select = [
@@ -136,8 +137,6 @@ select = [
 #    "FURB", # refurb  # needs --preview flag to run
 ]
 ignore = [
-    "ANN101",  # missing-type-self
-    "ANN102",  # cls 
     "E501",   # line too long -- black will take care of this for us
     "SIM115", # use context handler for open -- situationally useful
 #    "SIM300", # yoda conditions -- meh

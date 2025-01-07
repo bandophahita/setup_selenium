@@ -279,6 +279,9 @@ class SetupSelenium:
         options.set_preference("app.update.enabled", False)
         options.set_preference("network.prefetch-next", False)
         options.set_preference("network.dns.disablePrefetch", True)
+        options.set_preference(
+            "extensions.formautofill.addresses.capture.enabled", False
+        )
         return options
 
     @staticmethod
@@ -351,9 +354,11 @@ class SetupSelenium:
             # it's possible we no longer need to do these
             "--disable-gpu",  # https://stackoverflow.com/q/51959986/2532408
         )
+        exp_prefs = {"autofill.profile_enabled": False}
         options = webdriver.ChromeOptions()
         for opt in opts:
             options.add_argument(opt)
+        options.add_experimental_option("prefs", exp_prefs)
         return options
 
     @staticmethod
@@ -484,9 +489,11 @@ class SetupSelenium:
             "--no-sandbox",
             "--disable-dev-shm-usage",
         )
+        exp_prefs = {"autofill.profile_enabled": False}
         options = webdriver.EdgeOptions()
         for opt in opts:
             options.add_argument(opt)
+        options.add_experimental_option("prefs", exp_prefs)
         return options
 
     @staticmethod
@@ -587,7 +594,7 @@ class SetupSelenium:
 
     def set_main_window_handle(self, window: str | None = None) -> str:
         """
-        maintains the initial window handle as an attribute
+        Maintains the initial window handle as an attribute
 
         Most users will never utilize this. It's part of a legacy requirement for
         an old test suite
@@ -599,7 +606,7 @@ class SetupSelenium:
             except NoSuchWindowException:
                 try:
                     window = self.driver.window_handles[0]
-                except WebDriverException:  # noqa: TRY302
+                except WebDriverException:  # noqa: TRY203
                     # Have we closed all the windows?
                     raise
         if window:
