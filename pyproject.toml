@@ -2,7 +2,7 @@
 name = "setup-selenium-testing"
 version = "0.1.8"
 description = "Setup Selenium for automation testing"
-authors = ["Marcel Wilson <trenchrats@gmail.com>"]
+authors = ["Marcel Wilson <trenchrats+pypi@gmail.com>"]
 license = "MIT"
 repository = "https://github.com/bandophahita/setup_selenium"
 #documentation = ""
