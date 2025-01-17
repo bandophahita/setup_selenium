@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import errno
+import json
 import logging
 import os as os
 from enum import Enum
@@ -160,8 +161,7 @@ class SetupSelenium:
     @staticmethod
     def log_options(options: ArgOptions) -> None:
         """Logs the browser option in clean format"""
-        opts = "\n".join(options.arguments)
-        logger.debug(f"{opts}")
+        logger.debug(f"{json.dumps(options.capabilities, indent=2)}")
 
     @staticmethod
     def install_driver(
