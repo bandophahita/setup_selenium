@@ -161,7 +161,9 @@ class SetupSelenium:
     @staticmethod
     def log_options(options: ArgOptions) -> None:
         """Logs the browser option in clean format"""
-        logger.debug(f"{json.dumps(options.capabilities, indent=2)}")
+        # logger.debug(f"{json.dumps(options.capabilities, indent=2)}")
+        opts = "\n".join(options.arguments)
+        logger.debug(f"{opts}")
 
     @staticmethod
     def install_driver(
