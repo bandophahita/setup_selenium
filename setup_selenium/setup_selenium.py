@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import errno
-import json
 import logging
 import os as os
 from enum import Enum
@@ -284,6 +283,24 @@ class SetupSelenium:
         options.set_preference(
             "extensions.formautofill.addresses.capture.enabled", False
         )
+        # By default, headless Firefox runs as though no pointers capabilities
+        # are available.
+        # https://github.com/microsoft/playwright/issues/7769#issuecomment-966098074
+        #
+        # This impacts React Spectrum which uses an '(any-pointer: fine)'
+        # media query to determine font size. It also causes certain chart
+        # elements to always be visible that should only be visible on
+        # hover.
+        #
+        # Available values for pointer capabilities:
+        # NO_POINTER             0x00
+        # COARSE_POINTER         0x01
+        # FINE_POINTER           0x02
+        # HOVER_CAPABLE_POINTER  0x04
+        #
+        # Setting to 0x02 | 0x04 says the system supports a mouse
+        options.set_preference("ui.primaryPointerCapabilities", 0x02 | 0x04)
+        options.set_preference("ui.allPointerCapabilities", 0x02 | 0x04)
         return options
 
     @staticmethod
@@ -355,6 +372,7 @@ class SetupSelenium:
             "--disable-dev-shm-usage",
             # it's possible we no longer need to do these
             "--disable-gpu",  # https://stackoverflow.com/q/51959986/2532408
+
         )
         exp_prefs = {"autofill.profile_enabled": False}
         options = webdriver.ChromeOptions()
