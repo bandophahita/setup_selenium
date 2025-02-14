@@ -380,7 +380,7 @@ class SetupSelenium:
             options.binary_location = binary
 
         if headless:
-            options.add_argument("--headless")
+            options.add_argument("--headless=new")
 
         logging_prefs = {"browser": "OFF", "performance": "OFF", "driver": "OFF"}
 
@@ -525,12 +525,11 @@ class SetupSelenium:
         # by default performance is disabled.
         if enable_log_performance:
             logging_prefs["performance"] = "ALL"
-            options.set_capability(
+            options.add_experimental_option(
                 "perfLoggingPrefs",
                 {
                     "enableNetwork": True,
                     "enablePage": False,
-                    "enableTimeline": False,
                 },
             )
 
