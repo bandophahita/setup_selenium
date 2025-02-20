@@ -5,8 +5,9 @@ import os
 from typing import TYPE_CHECKING
 
 import pytest
-from selenium import webdriver
+from selenium import __version__ as selenium_version, webdriver
 from selenium.common.exceptions import NoSuchDriverException
+from semantic_version import Version  # type: ignore[import-untyped]
 
 from setup_selenium import Browser, SetupSelenium, set_logger
 from setup_selenium.setup_selenium import logger as original_logger
@@ -85,7 +86,9 @@ def test_install_firefox_browser_version() -> None:
     assert "118.0.2" in path2
 
 
-@pytest.mark.xfail(reason="broken until selenium 4.28")
+@pytest.mark.xfail(
+    Version(selenium_version) < Version("4.28.0"), reason="broken until selenium 4.28"
+)
 def test_install_edge() -> None:
     path1, path2 = SetupSelenium.install_driver(Browser.EDGE, install_browser=False)
     path3, path4 = SetupSelenium.install_driver(Browser.EDGE, install_browser=True)
@@ -110,7 +113,9 @@ def test_install_edge_driver_version() -> None:
     assert EDGE_VERSION_NEW in path1
 
 
-@pytest.mark.xfail(reason="broken until selenium 4.28")
+@pytest.mark.xfail(
+    Version(selenium_version) < Version("4.28.0"), reason="broken until selenium 4.28"
+)
 def test_install_edge_browser_version() -> None:
     path1, path2 = SetupSelenium.install_driver(
         Browser.EDGE, browser_version=EDGE_VERSION_OLD
