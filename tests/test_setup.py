@@ -111,10 +111,10 @@ def test_install_edge_path() -> None:
 
 def test_install_edge_driver_version() -> None:
     path1, path2 = SetupSelenium.install_driver(
-        Browser.EDGE, driver_version=EDGE_VERSION_NEW, install_browser=False
+        Browser.EDGE, driver_version=EDGE_VERSION_OLD, install_browser=False
     )
 
-    assert EDGE_VERSION_NEW in path1
+    assert EDGE_VERSION_OLD in path1
 
 
 @pytest.mark.xfail(
