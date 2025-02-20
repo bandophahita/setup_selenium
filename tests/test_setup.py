@@ -238,6 +238,20 @@ def test_default_logger(
 
     assert "initializing chromedriver" in caplog.messages
     assert (
+        "--disable-back-forward-cache\n"
+        "--disable-background-timer-throttling\n"
+        "--disable-breakpad\n"
+        "--disable-component-extensions-with-background-pages\n"
+        "--disable-ipc-flooding-protection\n"
+        "--enable-features=NetworkService,NetworkServiceInProcess\n"
+        "--enable-logging\n"
+        "--export-tagged-pdf\n"
+        "--force-color-profile=srgb\n"
+        "--metrics-recording-only\n"
+        "--mute-audio\n"
+        "--remote-debugging-pipe\n"
+        "--disable-renderer-backgrounding\n"
+        "--disable-backgrounding-occluded-windows\n"
         "--disable-extensions\n"
         "--allow-running-insecure-content\n"
         "--ignore-certificate-errors\n"
@@ -269,6 +283,20 @@ def test_custom_logger(
     assert "initializing chromedriver" in caplog.messages
     assert in_caplog("Selenium Manager binary", caplog)
     assert (
+        "--disable-back-forward-cache\n"
+        "--disable-background-timer-throttling\n"
+        "--disable-breakpad\n"
+        "--disable-component-extensions-with-background-pages\n"
+        "--disable-ipc-flooding-protection\n"
+        "--enable-features=NetworkService,NetworkServiceInProcess\n"
+        "--enable-logging\n"
+        "--export-tagged-pdf\n"
+        "--force-color-profile=srgb\n"
+        "--metrics-recording-only\n"
+        "--mute-audio\n"
+        "--remote-debugging-pipe\n"
+        "--disable-renderer-backgrounding\n"
+        "--disable-backgrounding-occluded-windows\n"
         "--disable-extensions\n"
         "--allow-running-insecure-content\n"
         "--ignore-certificate-errors\n"
@@ -279,7 +307,7 @@ def test_custom_logger(
         "--no-sandbox\n"
         "--disable-dev-shm-usage\n"
         "--disable-gpu\n"
-        "--headless"
+        "--headless=new"
     ) in caplog.messages
 
     assert in_caplog("Driver info: chromedriver=", caplog)

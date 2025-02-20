@@ -357,9 +357,29 @@ class SetupSelenium:
     def chrome_options() -> webdriver.ChromeOptions:
         """Default options for chrome"""
         logger.debug("Setting up chrome options")
+        # the ultimate list of flags (created by the chromium dev group)
+        # https://peter.sh/experiments/chromium-command-line-switches/
+
         # The list of options set below mostly came from this StackOverflow post
         # https://stackoverflow.com/q/48450594/2532408
         opts = (
+            "--disable-back-forward-cache",
+            "--disable-background-timer-throttling",
+            "--disable-breakpad",
+            "--disable-component-extensions-with-background-pages",
+            # "--disable-features=ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync",
+            "--disable-ipc-flooding-protection",
+            "--enable-features=NetworkService,NetworkServiceInProcess",
+            "--enable-logging",
+            "--export-tagged-pdf",
+            "--force-color-profile=srgb",
+            "--metrics-recording-only",
+            "--mute-audio",
+            "--remote-debugging-pipe",
+            # fixes MUI fade issue
+            "--disable-renderer-backgrounding",
+            # fixes actionchains in headless
+            "--disable-backgrounding-occluded-windows",
             "--disable-extensions",
             "--allow-running-insecure-content",
             "--ignore-certificate-errors",
@@ -372,7 +392,6 @@ class SetupSelenium:
             "--disable-dev-shm-usage",
             # it's possible we no longer need to do these
             "--disable-gpu",  # https://stackoverflow.com/q/51959986/2532408
-
         )
         exp_prefs = {"autofill.profile_enabled": False}
         options = webdriver.ChromeOptions()
@@ -495,9 +514,29 @@ class SetupSelenium:
     def edge_options() -> webdriver.EdgeOptions:
         """Default options for edgedriver"""
         logger.debug("Setting up edge options")
+        # the ultimate list of flags (created by the chromium dev group)
+        # https://peter.sh/experiments/chromium-command-line-switches/
+
         # The list of options set below mostly came from this StackOverflow post
         # https://stackoverflow.com/q/48450594/2532408
         opts = (
+            "--disable-back-forward-cache",
+            "--disable-background-timer-throttling",
+            "--disable-breakpad",
+            "--disable-component-extensions-with-background-pages",
+            # "--disable-features=ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync",
+            "--disable-ipc-flooding-protection",
+            "--enable-features=NetworkService,NetworkServiceInProcess",
+            "--enable-logging",
+            "--export-tagged-pdf",
+            "--force-color-profile=srgb",
+            "--metrics-recording-only",
+            "--mute-audio",
+            "--remote-debugging-pipe",
+            # fixes MUI fade issue
+            "--disable-renderer-backgrounding",
+            # fixes actionchains in headless
+            "--disable-backgrounding-occluded-windows",
             "--disable-extensions",
             "--allow-running-insecure-content",
             "--ignore-certificate-errors",
