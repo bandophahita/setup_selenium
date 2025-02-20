@@ -363,11 +363,11 @@ class SetupSelenium:
         # The list of options set below mostly came from this StackOverflow post
         # https://stackoverflow.com/q/48450594/2532408
         opts = (
+            # "--disable-features=ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync",  # noqa: ERA001
             "--disable-back-forward-cache",
             "--disable-background-timer-throttling",
             "--disable-breakpad",
             "--disable-component-extensions-with-background-pages",
-            # "--disable-features=ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync",  # noqa: ERA001
             "--disable-ipc-flooding-protection",
             "--enable-features=NetworkService,NetworkServiceInProcess",
             "--enable-logging",
@@ -520,11 +520,11 @@ class SetupSelenium:
         # The list of options set below mostly came from this StackOverflow post
         # https://stackoverflow.com/q/48450594/2532408
         opts = (
+            # "--disable-features=ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync",  # noqa: ERA001
             "--disable-back-forward-cache",
             "--disable-background-timer-throttling",
             "--disable-breakpad",
             "--disable-component-extensions-with-background-pages",
-            # "--disable-features=ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync",  # noqa: ERA001
             "--disable-ipc-flooding-protection",
             "--enable-features=NetworkService,NetworkServiceInProcess",
             "--enable-logging",
