@@ -2,14 +2,12 @@
 
 from __future__ import annotations
 
-import errno
 import logging
 import os as os
 from enum import Enum
 from typing import TYPE_CHECKING, Optional, Union
 
 from selenium import __version__, webdriver
-from selenium.common.exceptions import NoSuchWindowException, WebDriverException
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.selenium_manager import SeleniumManager
 from selenium.webdriver.edge.service import Service as EdgeService
@@ -18,7 +16,6 @@ from semantic_version import Version  # type: ignore[import-untyped]
 from typing_extensions import TypeAlias
 
 if TYPE_CHECKING:
-    from collections.abc import Mapping
 
     from selenium.webdriver import Chrome, Edge, Firefox
     from selenium.webdriver.common.options import ArgOptions
@@ -68,27 +65,10 @@ class Browser(str, Enum):
 ################################################################################
 ################################################################################
 class SetupSelenium:
-    DIMENSIONS: Mapping[str, tuple[int, int]] = {
-        # ratio 4:3
-        "1024": (1024, 768),
-        "1280": (1280, 960),
-        "1600": (1600, 1200),
-        "1920": (1920, 1440),
-        # ratio 16:9
-        "720": (1280, 720),
-        "1080": (1920, 1080),
-        "1440": (2560, 1440),
-        "2160": (3840, 2160),  # 4k
-        "4320": (7680, 4320),  # 8k
-    }
-
     def __init__(
         self,
         browser: Browser = Browser.CHROME,
-        baseurl: str = "",
-        timeout: int = 15,
         headless: bool = False,
-        window_size: str = "720",
         enable_log_performance: bool = False,
         enable_log_console: bool = False,
         enable_log_driver: bool = False,
@@ -99,11 +79,6 @@ class SetupSelenium:
         browser_path: str | None = None,
     ) -> None:
         log_path = os.path.abspath(os.path.expanduser(log_path))
-        self.main_window_handle: str = ""
-        self.screenshot_path: str = self.make_screenshot_path(log_path)
-        self.log_path: str = log_path
-        self.timeout: int = timeout
-        self.baseurl: str = baseurl
 
         if driver_path:
             driver_path = os.path.abspath(os.path.expanduser(driver_path))
@@ -130,31 +105,6 @@ class SetupSelenium:
             binary=binarypath,
             driver_path=driver_path,
         )
-
-        # driver must be setup before the following
-        self.driver.set_window_position(0, 0)
-        self.set_window_size(window_size)
-        self.set_main_window_handle()
-
-    ############################################################################
-    @staticmethod
-    def make_screenshot_path(
-        output_dir: str = "./logs", screenshots: str = "screenshots"
-    ) -> str:
-        """Set the output directory for where screenshots should go."""
-        output_dir = os.path.abspath(os.path.expanduser(output_dir))
-        if os.path.split(output_dir)[-1].lower() != screenshots:
-            output_dir = os.path.join(output_dir, screenshots)
-
-        try:
-            os.makedirs(output_dir)
-        except OSError as e:
-            if e.errno == errno.EEXIST and os.path.isdir(output_dir):
-                pass
-            else:
-                raise
-
-        return output_dir
 
     ############################################################################
     @staticmethod
@@ -637,42 +587,3 @@ class SetupSelenium:
             logger.info(bsrmsg)
         SetupSelenium.log_options(options)
         return driver
-
-    ############################################################################
-    def set_window_size(self, size: str = "720") -> None:
-        """Helper to set the window size after driver has been instantiated."""
-        if size == "max":
-            self.driver.maximize_window()
-            return
-
-        width, height = SetupSelenium.DIMENSIONS.get(
-            size, SetupSelenium.DIMENSIONS.get(size, (1280, 720))
-        )
-        self.driver.set_window_size(width, height)
-
-    def set_main_window_handle(self, window: str | None = None) -> str:
-        """
-        Maintains the initial window handle as an attribute
-
-        Most users will never utilize this. It's part of a legacy requirement for
-        an old test suite
-        """
-        # does the main_window_handle exist and point to an available window?
-        if not window and not self.main_window_handle:
-            try:
-                window = self.driver.current_window_handle
-            except NoSuchWindowException:
-                try:
-                    window = self.driver.window_handles[0]
-                except WebDriverException:  # noqa: TRY203
-                    # Have we closed all the windows?
-                    raise
-        if window:
-            self.main_window_handle = window
-        return self.main_window_handle
-
-    ############################################################################
-    def __repr__(self) -> str:
-        browser = self.driver.name if self.driver is not None else "NoBrowserSet"
-        url = self.baseurl
-        return f"{self.__class__.__name__} :: {browser} -> {url}"
