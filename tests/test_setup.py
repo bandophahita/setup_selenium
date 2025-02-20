@@ -19,6 +19,10 @@ CHROME_VERSION_OLD = "118.0.5993.70"
 CHROME_VERSION_NEW = "133.0.6943.98"
 EDGE_VERSION_OLD = "131.0.2903.112"
 EDGE_VERSION_NEW = "133.0.3065.69"
+GECKO_VERSION_OLD = "0.34.0"
+GECKO_VERSION_NEW = "0.35.0"
+FIREFOX_VERSION_OLD = "134.0"
+FIREFOX_VERSION_NEW = "135.0.1"
 
 
 # these require installation of the browsers to pass
@@ -72,18 +76,18 @@ def test_install_firefox_path() -> None:
 
 def test_install_firefox_driver_version() -> None:
     path1, path2 = SetupSelenium.install_driver(
-        Browser.FIREFOX, driver_version="0.31.0", install_browser=False
+        Browser.FIREFOX, driver_version=GECKO_VERSION_OLD, install_browser=False
     )
 
-    assert "0.31.0" in path1
+    assert GECKO_VERSION_OLD in path1
 
 
 def test_install_firefox_browser_version() -> None:
     path1, path2 = SetupSelenium.install_driver(
-        Browser.FIREFOX, browser_version="118.0.2"
+        Browser.FIREFOX, browser_version=FIREFOX_VERSION_OLD
     )
 
-    assert "118.0.2" in path2
+    assert FIREFOX_VERSION_OLD in path2
 
 
 @pytest.mark.xfail(
