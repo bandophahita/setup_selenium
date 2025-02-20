@@ -160,7 +160,7 @@ class SetupSelenium:
     @staticmethod
     def log_options(options: ArgOptions) -> None:
         """Logs the browser option in clean format"""
-        # logger.debug(f"{json.dumps(options.capabilities, indent=2)}")
+        # logger.debug(f"{json.dumps(options.capabilities, indent=2)}")  # noqa: ERA001
         opts = "\n".join(options.arguments)
         logger.debug(f"{opts}")
 
@@ -367,7 +367,7 @@ class SetupSelenium:
             "--disable-background-timer-throttling",
             "--disable-breakpad",
             "--disable-component-extensions-with-background-pages",
-            # "--disable-features=ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync",
+            # "--disable-features=ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync",  # noqa: ERA001
             "--disable-ipc-flooding-protection",
             "--enable-features=NetworkService,NetworkServiceInProcess",
             "--enable-logging",
@@ -524,7 +524,7 @@ class SetupSelenium:
             "--disable-background-timer-throttling",
             "--disable-breakpad",
             "--disable-component-extensions-with-background-pages",
-            # "--disable-features=ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync",
+            # "--disable-features=ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync",  # noqa: ERA001
             "--disable-ipc-flooding-protection",
             "--enable-features=NetworkService,NetworkServiceInProcess",
             "--enable-logging",
