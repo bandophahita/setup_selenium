@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "setup-selenium-testing"
-version = "0.2.0"
+version = "0.3.0"
 description = "Setup Selenium for automation testing"
 authors = ["Marcel Wilson <trenchrats+pypi@gmail.com>"]
 license = "MIT"
@@ -10,7 +10,6 @@ readme = "README.md"
 classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -23,7 +22,7 @@ packages = [{include = "setup_selenium"}]
 
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 selenium = ">=4.7.0"
 semantic-version = "*"
 typing-extensions = "*"
@@ -67,7 +66,7 @@ build-backend = "poetry.core.masonry.api"
 
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 line-length = 88
 extend-exclude = [
     ".github",

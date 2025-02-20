@@ -160,6 +160,7 @@ class SetupSelenium:
     @staticmethod
     def log_options(options: ArgOptions) -> None:
         """Logs the browser option in clean format"""
+        # logger.debug(f"{json.dumps(options.capabilities, indent=2)}")  # noqa: ERA001
         opts = "\n".join(options.arguments)
         logger.debug(f"{opts}")
 
@@ -282,6 +283,24 @@ class SetupSelenium:
         options.set_preference(
             "extensions.formautofill.addresses.capture.enabled", False
         )
+        # By default, headless Firefox runs as though no pointers capabilities
+        # are available.
+        # https://github.com/microsoft/playwright/issues/7769#issuecomment-966098074
+        #
+        # This impacts React Spectrum which uses an '(any-pointer: fine)'
+        # media query to determine font size. It also causes certain chart
+        # elements to always be visible that should only be visible on
+        # hover.
+        #
+        # Available values for pointer capabilities:
+        # NO_POINTER             0x00
+        # COARSE_POINTER         0x01
+        # FINE_POINTER           0x02
+        # HOVER_CAPABLE_POINTER  0x04
+        #
+        # Setting to 0x02 | 0x04 says the system supports a mouse
+        options.set_preference("ui.primaryPointerCapabilities", 0x02 | 0x04)
+        options.set_preference("ui.allPointerCapabilities", 0x02 | 0x04)
         return options
 
     @staticmethod
@@ -338,9 +357,29 @@ class SetupSelenium:
     def chrome_options() -> webdriver.ChromeOptions:
         """Default options for chrome"""
         logger.debug("Setting up chrome options")
+        # the ultimate list of flags (created by the chromium dev group)
+        # https://peter.sh/experiments/chromium-command-line-switches/
+
         # The list of options set below mostly came from this StackOverflow post
         # https://stackoverflow.com/q/48450594/2532408
         opts = (
+            # "--disable-features=ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync",  # noqa: ERA001
+            "--disable-back-forward-cache",
+            "--disable-background-timer-throttling",
+            "--disable-breakpad",
+            "--disable-component-extensions-with-background-pages",
+            "--disable-ipc-flooding-protection",
+            "--enable-features=NetworkService,NetworkServiceInProcess",
+            "--enable-logging",
+            "--export-tagged-pdf",
+            "--force-color-profile=srgb",
+            "--metrics-recording-only",
+            "--mute-audio",
+            "--remote-debugging-pipe",
+            # fixes MUI fade issue
+            "--disable-renderer-backgrounding",
+            # fixes actionchains in headless
+            "--disable-backgrounding-occluded-windows",
             "--disable-extensions",
             "--allow-running-insecure-content",
             "--ignore-certificate-errors",
@@ -378,7 +417,7 @@ class SetupSelenium:
             options.binary_location = binary
 
         if headless:
-            options.add_argument("--headless")
+            options.add_argument("--headless=new")
 
         logging_prefs = {"browser": "OFF", "performance": "OFF", "driver": "OFF"}
 
@@ -475,9 +514,29 @@ class SetupSelenium:
     def edge_options() -> webdriver.EdgeOptions:
         """Default options for edgedriver"""
         logger.debug("Setting up edge options")
+        # the ultimate list of flags (created by the chromium dev group)
+        # https://peter.sh/experiments/chromium-command-line-switches/
+
         # The list of options set below mostly came from this StackOverflow post
         # https://stackoverflow.com/q/48450594/2532408
         opts = (
+            # "--disable-features=ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync",  # noqa: ERA001
+            "--disable-back-forward-cache",
+            "--disable-background-timer-throttling",
+            "--disable-breakpad",
+            "--disable-component-extensions-with-background-pages",
+            "--disable-ipc-flooding-protection",
+            "--enable-features=NetworkService,NetworkServiceInProcess",
+            "--enable-logging",
+            "--export-tagged-pdf",
+            "--force-color-profile=srgb",
+            "--metrics-recording-only",
+            "--mute-audio",
+            "--remote-debugging-pipe",
+            # fixes MUI fade issue
+            "--disable-renderer-backgrounding",
+            # fixes actionchains in headless
+            "--disable-backgrounding-occluded-windows",
             "--disable-extensions",
             "--allow-running-insecure-content",
             "--ignore-certificate-errors",
@@ -523,12 +582,11 @@ class SetupSelenium:
         # by default performance is disabled.
         if enable_log_performance:
             logging_prefs["performance"] = "ALL"
-            options.set_capability(
+            options.add_experimental_option(
                 "perfLoggingPrefs",
                 {
                     "enableNetwork": True,
                     "enablePage": False,
-                    "enableTimeline": False,
                 },
             )
 
