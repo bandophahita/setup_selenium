@@ -325,7 +325,7 @@ class SetupSelenium:
             "--force-color-profile=srgb",
             "--metrics-recording-only",
             "--mute-audio",
-            # "--remote-debugging-pipe",
+            # "--remote-debugging-pipe",  # noqa: ERA001
             # fixes MUI fade issue
             "--disable-renderer-backgrounding",
             # fixes actionchains in headless
@@ -482,7 +482,7 @@ class SetupSelenium:
             "--force-color-profile=srgb",
             "--metrics-recording-only",
             "--mute-audio",
-            # "--remote-debugging-pipe",
+            # "--remote-debugging-pipe",  # noqa: ERA001
             # fixes MUI fade issue
             "--disable-renderer-backgrounding",
             # fixes actionchains in headless
