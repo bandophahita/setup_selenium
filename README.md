@@ -18,7 +18,42 @@ in every project.  Time to consolidate.
 [![Build Status](https://github.com/bandophahita/setup_selenium/actions/workflows/lint.yml/badge.svg)](https://github.com/bandophahita/setup_selenium/actions/workflows/lint.yml)
 
 
-# Basic usage
+# Instantiating SetupSelenium
+
+This will automatically handle any downloading of drivers or browsers via `SeleniumManager`
+
+```python
+from setup_selenium import SetupSelenium
+
+s = SetupSelenium(headless=True)
+assert s.driver.service.is_connectable()
+```
+
+Advanced usage:
+
+```python
+from setup_selenium import Browser, SetupSelenium
+
+s = SetupSelenium(Browser.FIREFOX, headless=True, driver_version="118.0.5993.70")
+s = SetupSelenium(Browser.CHROME, headless=True, driver_version="118.0.5993.70",
+                  driver_path="/path/to/webdriver"
+                  )
+```
+
+> [!NOTE] 
+> Version and path arguments follow the logic of 
+> [SeleniumManager](https://www.selenium.dev/documentation/selenium_manager/). 
+> Caution is advised in cases where version and path do not match. 
+> See their documentation.
+
+# Install Driver only
+```python
+from setup_selenium import Browser, SetupSelenium
+
+driver_path, browser_path = SetupSelenium.install_driver(Browser.CHROME, driver_version="118.0.5993.70")
+```
+
+# Create driver only
 
 ```python
 from setup_selenium import Browser, SetupSelenium
@@ -26,7 +61,8 @@ from setup_selenium import Browser, SetupSelenium
 driver = SetupSelenium.create_driver(browser=Browser.CHROME, headless=True)
 ```
 
-# Advanced usage
+Advanced usage:
+
 ```python
 from setup_selenium import Browser, SetupSelenium
 
@@ -43,18 +79,10 @@ driver = SetupSelenium.create_driver(
 ```
 
 > [!NOTE]
-> It is possible to enable the performance and console logging 
+> It is possible to enable the performance and console logging
 > but only for chrome based browsers. This only enables the browser ability.
 > It is up to the tester to handle logging the messages.
 
-
-
-# Driver installation
-```python
-from setup_selenium import Browser, SetupSelenium
-
-driver_path, browser_path = SetupSelenium.install_driver(Browser.CHROME, "118.0.5993.70")
-```
 
 # Custom logger
 ```python
@@ -64,18 +92,6 @@ from setup_selenium import Browser, SetupSelenium, set_logger
 set_logger(logging.getLogger("your_custom_logger"))
 driver = SetupSelenium.create_driver(browser=Browser.CHROME, headless=True)
 ```
-
-# Instantiating SetupSelenium
-While it is possible to use the class directly caution is advised; as the class
-will create the driver upon instantiation. 
-
-```python
-from setup_selenium import SetupSelenium
-
-s = SetupSelenium(headless=True)
-assert s.driver.service.is_connectable()
-```
-
 
 # Automatic driver and browser installation
 This package not only handles setup of the webdriver but also will
