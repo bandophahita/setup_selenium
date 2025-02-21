@@ -113,6 +113,9 @@ Passing a valid `driver_path` will not trigger any download of the webdriver.
 
 CHANGELOG
 ---------
+### version 1.0.1
+
+- removed `--remote-debugging-pipe` from default chrome options (causes older chrome to crash)
 
 ### version 1.0.0
 
