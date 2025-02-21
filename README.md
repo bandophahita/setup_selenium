@@ -109,3 +109,11 @@ and use that.
 
 Passing a valid `binary_path` will not trigger any download of the browser.
 Passing a valid `driver_path` will not trigger any download of the webdriver.
+
+
+CHANGELOG
+---------
+
+### version 1.0.0
+
+- official release
