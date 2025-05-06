@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 import os as os
 from enum import Enum
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING, Union
 
 from selenium import __version__, webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -171,7 +171,7 @@ class SetupSelenium:
         log_dir: str = "./logs",
         binary: str | None = None,
         driver_path: str | None = None,
-        options: Optional[T_DrvOpts] = None,
+        options: T_DrvOpts | None = None,
     ) -> T_WebDriver:
         """Instantiates the browser driver"""
         browser = browser.lower()
