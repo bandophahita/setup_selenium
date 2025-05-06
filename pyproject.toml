@@ -143,7 +143,6 @@ ignore = [
     "TC006",  # cast wants str for types (blech!)
 
     # 3.9 compatibility
-    "UP007", # Use `X | Y` for type annotations
     "UP038", # Use `X | Y` in `isinstance` call instead of `(X, Y)`
 ]
 
