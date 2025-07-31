@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "setup-selenium-testing"
-version = "1.0.4"
+version = "1.0.5"
 description = "Setup Selenium for automation testing"
 authors = ["Marcel Wilson <trenchrats+pypi@gmail.com>"]
 license = "MIT"
