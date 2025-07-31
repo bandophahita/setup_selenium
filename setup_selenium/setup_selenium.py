@@ -128,6 +128,9 @@ class SetupSelenium:
 
         sm = SeleniumManager()
 
+        if browser == Browser.EDGE:
+            os.environ["SE_DRIVER_MIRROR_URL"] = "https://msedgedriver.microsoft.com"
+
         if NEW_SELENIUM:
             args = [f"{sm._get_binary()}", "--browser", browser]
         else:
