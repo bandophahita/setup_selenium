@@ -460,6 +460,7 @@ class SetupSelenium:
 
     @staticmethod
     def set_cpu_throttle(driver: webdriver.Chrome, rate: int = 10):
+        """Experimental settings to slow down browser"""
         driver.execute_cdp_cmd("Emulation.setCPUThrottlingRate", {"rate": rate})
 
     @staticmethod
