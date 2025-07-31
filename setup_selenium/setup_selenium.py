@@ -128,6 +128,9 @@ class SetupSelenium:
 
         sm = SeleniumManager()
 
+        if browser == Browser.EDGE:
+            os.environ["SE_DRIVER_MIRROR_URL"] = "https://msedgedriver.microsoft.com"
+
         if NEW_SELENIUM:
             args = [f"{sm._get_binary()}", "--browser", browser]
         else:
@@ -432,7 +435,7 @@ class SetupSelenium:
         return driver
 
     @staticmethod
-    def set_throttle(driver: webdriver.Chrome):
+    def set_network_throttle(driver: webdriver.Chrome, network_type: str = "SLOW3G"):
         """Experimental settings to slow down browser"""
         # experimental settings to slow down browser
         # @formatter:off
@@ -448,8 +451,7 @@ class SetupSelenium:
         }
         # fmt: on
         # @formatter:on
-        net_type = "SLOW3G"
-        net_lat, net_down, net_up = network_conditions[net_type]
+        net_lat, net_down, net_up = network_conditions[network_type]
         net_down = net_down / 8 * 1024
         net_up = net_up / 8 * 1024
         driver.set_network_conditions(
@@ -458,7 +460,11 @@ class SetupSelenium:
             download_throughput=net_down,
             upload_throughput=net_up,
         )
-        driver.execute_cdp_cmd("Emulation.setCPUThrottlingRate", {"rate": 100})
+
+    @staticmethod
+    def set_cpu_throttle(driver: webdriver.Chrome, rate: int = 10):
+        """Experimental settings to slow down browser"""
+        driver.execute_cdp_cmd("Emulation.setCPUThrottlingRate", {"rate": rate})
 
     @staticmethod
     def edge_options() -> webdriver.EdgeOptions:

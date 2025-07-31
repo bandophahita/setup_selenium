@@ -17,8 +17,8 @@ if TYPE_CHECKING:
 
 CHROME_VERSION_OLD = "118.0.5993.70"
 CHROME_VERSION_NEW = "133.0.6943.98"
-EDGE_VERSION_OLD = "133.0.3065.69"
-EDGE_VERSION_NEW = "136.0.3240.50"
+EDGE_VERSION_OLD = "136.0.3240.50"
+EDGE_VERSION_NEW = "138.0.3351.109"
 GECKO_VERSION_OLD = "0.34.0"
 GECKO_VERSION_NEW = "0.35.0"
 FIREFOX_VERSION_OLD = "134.0"
@@ -132,6 +132,7 @@ def test_can_be_instantiated() -> None:
     s = SetupSelenium(headless=True)
     assert isinstance(s, SetupSelenium)
     assert isinstance(s.driver, (webdriver.Firefox, webdriver.Chrome, webdriver.Edge))
+    assert s.driver.service
     assert s.driver.service.is_connectable()
 
 
@@ -142,6 +143,7 @@ def test_accepts_paths() -> None:
     s = SetupSelenium(headless=True, driver_path=path1, browser_path=path2)
     assert isinstance(s, SetupSelenium)
     assert isinstance(s.driver, webdriver.Chrome)
+    assert s.driver.service
     assert s.driver.service.is_connectable()
     assert s.driver.service.path == path1
     assert s.driver.capabilities["browserVersion"] == CHROME_VERSION_NEW
@@ -150,6 +152,7 @@ def test_accepts_paths() -> None:
 def test_chrome_service(create_logger: logging.Logger) -> None:
     set_logger(create_logger)
     driver = SetupSelenium.chrome(headless=True)
+    assert driver.service
     assert driver.service.is_connectable()
 
 
