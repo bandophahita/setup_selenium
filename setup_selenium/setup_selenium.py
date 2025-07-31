@@ -435,16 +435,18 @@ class SetupSelenium:
         return driver
 
     @staticmethod
-    def set_network_throttle(driver: webdriver.Chrome, network_type: str = "SLOW3G"):
+    def set_network_throttle(driver: webdriver.Chrome, network_type: str = "3G"):
         """Experimental settings to slow down browser"""
         # experimental settings to slow down browser
         # @formatter:off
         # fmt: off
         network_conditions = {
-            # latency, down, up
+            #           latency, down, up
             "GPRS"     : (500, 50,    20),
+            "2G"       : (300, 250,   50),
             "SLOW3G"   : (100, 250,   100),
-            "FAST3G"   : (40,  750,   250),
+            "3G"       : (100, 750,   250),
+            "FAST3G"   : (40,  1500,  750),
             "LTE"      : (20,  4000,  3000),
             "DSL"      : (5,   2000,  1000),
             "WIFI"     : (2,   30000, 15000),
