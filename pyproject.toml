@@ -141,9 +141,6 @@ ignore = [
     "PLR0915", # too-many-statements
     "S101", # use of assert
     "TC006",  # cast wants str for types (blech!)
-
-    # 3.9 compatibility
-    "UP038", # Use `X | Y` in `isinstance` call instead of `(X, Y)`
 ]
 
 extend-safe-fixes = [
