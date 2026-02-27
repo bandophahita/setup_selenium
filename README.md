@@ -113,6 +113,10 @@ Passing a valid `driver_path` will not trigger any download of the webdriver.
 
 CHANGELOG
 ---------
+### version 1.0.6
+
+- fixing annotations for selenium 4.41
+
 ### version 1.0.5
 
 - updated throttling functions
