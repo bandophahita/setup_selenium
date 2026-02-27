@@ -47,6 +47,7 @@ jobs:
         run: |
           rm /usr/local/share/chromedriver-mac-arm64/chromedriver
           rm /opt/homebrew/bin/geckodriver
+          rm /usr/local/bin/msedgedriver
 
 ################################################################################
 # SETUP TEST 
