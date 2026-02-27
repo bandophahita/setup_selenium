@@ -7,23 +7,26 @@ import os as os
 from enum import Enum
 from typing import TYPE_CHECKING, Union
 
-from selenium import __version__, webdriver
+from selenium import __version__
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.webdriver import WebDriver as Chrome
 from selenium.webdriver.common.selenium_manager import SeleniumManager
+from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.edge.service import Service as EdgeService
+from selenium.webdriver.edge.webdriver import WebDriver as Edge
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.firefox.service import Service as FirefoxService
+from selenium.webdriver.firefox.webdriver import WebDriver as Firefox
 from semantic_version import Version  # type: ignore[import-untyped]
 from typing_extensions import TypeAlias
 
 if TYPE_CHECKING:
 
-    from selenium.webdriver import Chrome, Edge, Firefox
     from selenium.webdriver.common.options import ArgOptions
 
     T_WebDriver: TypeAlias = Union[Firefox, Chrome, Edge]
-    T_DrvOpts: TypeAlias = Union[
-        webdriver.FirefoxOptions, webdriver.ChromeOptions, webdriver.EdgeOptions
-    ]
+    T_DrvOpts: TypeAlias = Union[FirefoxOptions, ChromeOptions, EdgeOptions]
 
 NEW_SELENIUM = False
 if Version(__version__) >= Version("4.20.0"):
@@ -180,7 +183,7 @@ class SetupSelenium:
         browser = browser.lower()
         driver: T_WebDriver
         if browser == Browser.FIREFOX:
-            assert options is None or isinstance(options, webdriver.FirefoxOptions)
+            assert options is None or isinstance(options, FirefoxOptions)
             driver = SetupSelenium.firefox(
                 headless=headless,
                 enable_log_driver=enable_log_driver,
@@ -191,7 +194,7 @@ class SetupSelenium:
             )
 
         elif browser == Browser.CHROME:
-            assert options is None or isinstance(options, webdriver.ChromeOptions)
+            assert options is None or isinstance(options, ChromeOptions)
             driver = SetupSelenium.chrome(
                 headless=headless,
                 enable_log_performance=enable_log_performance,
@@ -204,7 +207,7 @@ class SetupSelenium:
             )
 
         elif browser == Browser.EDGE:
-            assert options is None or isinstance(options, webdriver.EdgeOptions)
+            assert options is None or isinstance(options, EdgeOptions)
             driver = SetupSelenium.edge(
                 headless=headless,
                 enable_log_performance=enable_log_performance,
@@ -223,9 +226,9 @@ class SetupSelenium:
         return driver
 
     @staticmethod
-    def firefox_options() -> webdriver.FirefoxOptions:
+    def firefox_options() -> FirefoxOptions:
         """Default options for firefox"""
-        options = webdriver.FirefoxOptions()
+        options = FirefoxOptions()
         options.set_capability("unhandledPromptBehavior", "ignore")
 
         # profile settings
@@ -263,8 +266,8 @@ class SetupSelenium:
         log_dir: str = "./logs",
         driver_path: str | None = None,
         binary: str | None = None,
-        options: webdriver.FirefoxOptions | None = None,
-    ) -> webdriver.Firefox:
+        options: FirefoxOptions | None = None,
+    ) -> Firefox:
         """Instantiates firefox geockodriver"""
         options = options or SetupSelenium.firefox_options()
         if binary:
@@ -296,7 +299,7 @@ class SetupSelenium:
                 log_output=logpath,
             )
 
-        driver = webdriver.Firefox(service=service, options=options)
+        driver = Firefox(service=service, options=options)
 
         driverversion = driver.capabilities["moz:geckodriverVersion"]
         browserversion = driver.capabilities["browserVersion"]
@@ -307,7 +310,7 @@ class SetupSelenium:
         return driver
 
     @staticmethod
-    def chrome_options() -> webdriver.ChromeOptions:
+    def chrome_options() -> ChromeOptions:
         """Default options for chrome"""
         logger.debug("Setting up chrome options")
         # the ultimate list of flags (created by the chromium dev group)
@@ -347,7 +350,7 @@ class SetupSelenium:
             "--disable-gpu",  # https://stackoverflow.com/q/51959986/2532408
         )
         exp_prefs = {"autofill.profile_enabled": False}
-        options = webdriver.ChromeOptions()
+        options = ChromeOptions()
         for opt in opts:
             options.add_argument(opt)
         options.add_experimental_option("prefs", exp_prefs)
@@ -362,8 +365,8 @@ class SetupSelenium:
         log_dir: str = "./logs",
         driver_path: str | None = None,
         binary: str | None = None,
-        options: webdriver.ChromeOptions | None = None,
-    ) -> webdriver.Chrome:
+        options: ChromeOptions | None = None,
+    ) -> Chrome:
         """Instantiates chromedriver"""
         options = options or SetupSelenium.chrome_options()
         if binary:
@@ -413,7 +416,7 @@ class SetupSelenium:
                 log_output=logpath,  # type: ignore[arg-type]
             )
 
-        driver = webdriver.Chrome(service=service, options=options)
+        driver = Chrome(service=service, options=options)
 
         driver_vers = driver.capabilities["chrome"]["chromedriverVersion"].split(" ")[0]
         browser_vers = driver.capabilities["browserVersion"]
@@ -435,7 +438,7 @@ class SetupSelenium:
         return driver
 
     @staticmethod
-    def set_network_throttle(driver: webdriver.Chrome, network_type: str = "3G"):
+    def set_network_throttle(driver: Chrome, network_type: str = "3G"):
         """Experimental settings to slow down browser"""
         # experimental settings to slow down browser
         # @formatter:off
@@ -464,12 +467,12 @@ class SetupSelenium:
         )
 
     @staticmethod
-    def set_cpu_throttle(driver: webdriver.Chrome, rate: int = 10):
+    def set_cpu_throttle(driver: Chrome, rate: int = 10):
         """Experimental settings to slow down browser"""
         driver.execute_cdp_cmd("Emulation.setCPUThrottlingRate", {"rate": rate})
 
     @staticmethod
-    def edge_options() -> webdriver.EdgeOptions:
+    def edge_options() -> EdgeOptions:
         """Default options for edgedriver"""
         logger.debug("Setting up edge options")
         # the ultimate list of flags (created by the chromium dev group)
@@ -507,7 +510,7 @@ class SetupSelenium:
             "--disable-dev-shm-usage",
         )
         exp_prefs = {"autofill.profile_enabled": False}
-        options = webdriver.EdgeOptions()
+        options = EdgeOptions()
         for opt in opts:
             options.add_argument(opt)
         options.add_experimental_option("prefs", exp_prefs)
@@ -522,8 +525,8 @@ class SetupSelenium:
         log_dir: str = "./logs",
         driver_path: str | None = None,
         binary: str | None = None,
-        options: webdriver.EdgeOptions | None = None,
-    ) -> webdriver.Edge:
+        options: EdgeOptions | None = None,
+    ) -> Edge:
         """Instantiates edgedriver"""
         options = options or SetupSelenium.edge_options()
         if binary:
@@ -572,7 +575,7 @@ class SetupSelenium:
                 service_args=args,
                 log_output=logpath,  # type: ignore[arg-type]
             )
-        driver = webdriver.Edge(service=service, options=options)
+        driver = Edge(service=service, options=options)
 
         driver_vers = driver.capabilities["msedge"]["msedgedriverVersion"].split(" ")[0]
         browser_vers = driver.capabilities["browserVersion"]
