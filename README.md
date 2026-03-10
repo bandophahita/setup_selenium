@@ -113,6 +113,11 @@ Passing a valid `driver_path` will not trigger any download of the webdriver.
 
 CHANGELOG
 ---------
+### version 1.1.0
+
+- allow driver options to be passed into SetupSelenium()
+- disabled `HttpsFirstBalancedModeAutoEnable` in chromium based drivers (by default)
+
 ### version 1.0.6
 
 - fixing annotations for selenium 4.41
