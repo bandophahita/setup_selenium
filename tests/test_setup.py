@@ -279,6 +279,7 @@ def test_default_logger(
         "--no-sandbox\n"
         "--disable-dev-shm-usage\n"
         "--disable-gpu\n"
+        "--disable-features=HttpsFirstBalancedModeAutoEnable\n"
         "--headless=new"
     ) in caplog.messages
 
@@ -324,6 +325,7 @@ def test_custom_logger(
         "--no-sandbox\n"
         "--disable-dev-shm-usage\n"
         "--disable-gpu\n"
+        "--disable-features=HttpsFirstBalancedModeAutoEnable\n"
         "--headless=new"
     ) in caplog.messages
 
