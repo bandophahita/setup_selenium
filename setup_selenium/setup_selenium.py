@@ -80,6 +80,7 @@ class SetupSelenium:
         driver_version: str | None = None,
         browser_version: str | None = None,
         browser_path: str | None = None,
+        options: T_DrvOpts | None = None,
     ) -> None:
         log_path = os.path.abspath(os.path.expanduser(log_path))
 
@@ -107,6 +108,7 @@ class SetupSelenium:
             log_dir=log_path,
             binary=binarypath,
             driver_path=driver_path,
+            options=options,
         )
 
     ############################################################################
