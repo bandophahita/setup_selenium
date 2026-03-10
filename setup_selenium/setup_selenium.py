@@ -80,6 +80,7 @@ class SetupSelenium:
         driver_version: str | None = None,
         browser_version: str | None = None,
         browser_path: str | None = None,
+        options: T_DrvOpts | None = None,
     ) -> None:
         log_path = os.path.abspath(os.path.expanduser(log_path))
 
@@ -107,6 +108,7 @@ class SetupSelenium:
             log_dir=log_path,
             binary=binarypath,
             driver_path=driver_path,
+            options=options,
         )
 
     ############################################################################
@@ -348,6 +350,8 @@ class SetupSelenium:
             "--disable-dev-shm-usage",
             # it's possible we no longer need to do these
             "--disable-gpu",  # https://stackoverflow.com/q/51959986/2532408
+            # do not prompt about HTTP connections being insecure
+            "--disable-features=HttpsFirstBalancedModeAutoEnable",
         )
         exp_prefs = {"autofill.profile_enabled": False}
         options = ChromeOptions()
@@ -508,6 +512,8 @@ class SetupSelenium:
             # edgedriver crashes without these two in linux
             "--no-sandbox",
             "--disable-dev-shm-usage",
+            # do not prompt about HTTP connections being insecure
+            "--disable-features=HttpsFirstBalancedModeAutoEnable",
         )
         exp_prefs = {"autofill.profile_enabled": False}
         options = EdgeOptions()
